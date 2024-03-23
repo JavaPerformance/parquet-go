@@ -6,9 +6,12 @@
 package rle
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"io"
+	"strings"
+	"testing"
 	"unsafe"
 
 	"github.com/parquet-go/parquet-go/encoding"
@@ -31,6 +34,125 @@ const (
 type Encoding struct {
 	encoding.NotSupported
 	BitWidth int
+}
+
+func TestEncodeDecodeInt32(t *testing.T) {
+
+	// Sample data
+	//	src := []int32{1, 2, 3, 4, 5, 6, 7, 8}
+	src := []int32{1, 1, 1, 1, 1, 1, 1, 1}
+
+	// Encode
+	t.Log("Encode")
+	bitWidth := uint(32) // Use 32 bits for this example, adjust as necessary
+
+	encoded, err := encodeInt32(nil, src, bitWidth)
+	if err != nil {
+		t.Fatalf("Error encoding int32 slice: %v", err)
+	}
+
+	printByteArrayBitPattern(encoded)
+
+	// Decode
+	t.Log("Decode")
+
+	//	int32in := make([]int32, 16)
+
+	//	buf := unsafecast.Int32ToBytes(int32in)
+
+	//	buf, err = decodeInt32(buf[:0], encoded, bitWidth)
+	buf, err := decodeInt32(nil, encoded, bitWidth)
+
+	if err != nil {
+		t.Fatalf("Error decoding byte slice: %v", err)
+	}
+
+	printByteArrayBitPattern(buf)
+
+	//	for v := range src {
+	//		printInt32BitPattern(src[v])
+	//	}
+
+	int32Out, err := byteArrayToInt32Slice(buf, binary.LittleEndian)
+
+	//int32Out := unsafecast.BytesToInt32(buf)
+
+	// Compare src and int32Decoded
+	t.Log("Compare src and int32Decoded")
+	if len(src) != len(int32Out) {
+		t.Fatalf("Decoded slice length (%d) does not match source slice length (%d)", len(int32Out), len(src))
+	}
+
+	for i, v := range src {
+		t.Logf("decoded: %d, src: %d", v, int32Out[i])
+
+		printInt32BitPattern(v)
+		printInt32BitPattern(int32Out[i])
+
+		if v != int32Out[i] {
+			t.Errorf("Mismatch at index %d: expected %d, got %d", i, v, int32Out[i])
+		}
+	}
+}
+
+func byteArrayToInt32Slice(b []byte, byteOrder binary.ByteOrder) ([]int32, error) {
+	if len(b)%4 != 0 {
+		return nil, fmt.Errorf("byte slice length must be a multiple of 4")
+	}
+
+	int32s := make([]int32, 0, len(b)/4)
+	buf := bytes.NewReader(b)
+	for buf.Len() > 0 {
+		var value int32
+		err := binary.Read(buf, byteOrder, &value)
+		if err != nil {
+			return nil, err
+		}
+		int32s = append(int32s, value)
+	}
+	return int32s, nil
+}
+
+func printInt32BitPattern(n int32) {
+	bits := make([]string, 32)
+
+	for i := 0; i < 32; i++ {
+		if n&(1<<(31-i)) != 0 {
+			bits[i] = "1"
+		} else {
+			bits[i] = "0"
+		}
+	}
+
+	// Insert spaces between every 8 bits (1 byte)
+	for i := 8; i < 32; i += 9 {
+		bits = append(bits[:i], append([]string{" "}, bits[i:]...)...)
+	}
+
+	// Join all bits into a single string
+	bitPattern := strings.Join(bits, "")
+
+	fmt.Println(bitPattern)
+}
+
+func printByteArrayBitPattern(bytes []byte) {
+	var bitPatterns []string
+
+	for _, b := range bytes {
+		bits := make([]string, 8)
+		for i := 0; i < 8; i++ {
+			if b&(1<<(7-i)) != 0 {
+				bits[i] = "1"
+			} else {
+				bits[i] = "0"
+			}
+		}
+		// Join the bits for the current byte and add to the slice of bit patterns
+		bitPatterns = append(bitPatterns, strings.Join(bits, ""))
+	}
+
+	// Join all byte bit patterns with a space and print
+	fmt.Println(strings.Join(bitPatterns, " "))
 }
 
 func (e *Encoding) String() string {
@@ -85,7 +207,11 @@ func (e *Encoding) DecodeBoolean(dst []byte, src []byte) ([]byte, error) {
 func (e *Encoding) DecodeInt32(dst []int32, src []byte) ([]int32, error) {
 	buf := unsafecast.Int32ToBytes(dst)
 	buf, err := decodeInt32(buf[:0], src, uint(e.BitWidth))
-	return unsafecast.BytesToInt32(buf), e.wrap(err)
+	//return unsafecast.BytesToInt32(buf), e.wrap(err)
+
+	out, err := byteArrayToInt32Slice(buf, binary.LittleEndian)
+
+	return out, e.wrap(err)
 }
 
 func (e *Encoding) wrap(err error) error {
