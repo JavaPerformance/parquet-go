@@ -19,6 +19,8 @@ func TestSplitBlockFilter(t *testing.T) {
 	enc := SplitBlockFilter(10, "$").Encoding()
 
 	check := func(filter bloom.SplitBlockFilter, value Value) bool {
+		hash := value.hash(&bloom.XXH64{})
+		fmt.Printf("%v %v\n", value, hash)
 		return filter.Check(value.hash(&bloom.XXH64{}))
 	}
 
