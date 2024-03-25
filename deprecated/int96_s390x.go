@@ -144,6 +144,17 @@ func (i Int96) Len() int {
 // the same backing array.
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
+
+	for i := 0; i < len(data); i++ {
+		i96 = data[i]
+		printInt32BitPattern(i96[0])
+		fmt.Print(" - ")
+		printInt32BitPattern(i96[1])
+		fmt.Print(" - ")
+		printInt32BitPattern(i96[2])
+		fmt.Print("\n")
+	}
+
 	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 }
 
