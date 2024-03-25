@@ -20,7 +20,8 @@ func TestSplitBlockFilter(t *testing.T) {
 
 	check := func(filter bloom.SplitBlockFilter, value Value) bool {
 		hash := value.hash(&bloom.XXH64{})
-		fmt.Printf("%v %v\n", value, hash)
+		//		fmt.Printf("%s %d\n", value.string(), hash)
+		fmt.Printf("%d\n", hash)
 		return filter.Check(value.hash(&bloom.XXH64{}))
 	}
 
