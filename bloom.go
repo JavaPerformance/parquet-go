@@ -1,7 +1,6 @@
 package parquet
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/parquet-go/parquet-go/bloom"
@@ -221,23 +220,23 @@ func (splitBlockEncoding) EncodeFixedLenByteArray(dst []byte, src []byte, size i
 func splitBlockEncodeFixedLenByteArray(filter bloom.SplitBlockFilter, data []byte, size int) {
 	buffer := make([]uint64, 0, filterEncodeBufferSize)
 
-	fmt.Printf("input: (%d) (%d) ", len(data), size)
+	//	fmt.Printf("input: (%d) (%d) ", len(data), size)
 
 	for i, j := 0, size; j <= len(data); {
 
-		for k := i; k < i+size; k++ {
-			fmt.Printf("%d ", data[k])
-		}
+		//		for k := i; k < i+size; k++ {
+		//			fmt.Printf("%d ", data[k])
+		//		}
 
-		fmt.Printf(" / ")
+		//		fmt.Printf(" / ")
 		buffer = append(buffer, xxhash.Sum64(data[i:j]))
 		i += size
 		j += size
 	}
 
-	fmt.Printf("\n")
+	//	fmt.Printf("\n")
 
-	l := 0
+	//	l := 0
 
 	for i, j := 0, size; j <= len(data); {
 		if len(buffer) == cap(buffer) {
@@ -245,18 +244,18 @@ func splitBlockEncodeFixedLenByteArray(filter bloom.SplitBlockFilter, data []byt
 			buffer = buffer[:0]
 		}
 		buffer = append(buffer, xxhash.Sum64(data[i:j]))
-		l++
+		//		l++
 		i += size
 		j += size
 	}
 
-	fmt.Printf("output: ")
+	//	fmt.Printf("output: ")
 
-	for t := 0; t < l; t++ {
-		fmt.Printf("%d ", buffer[t])
-	}
+	//	for t := 0; t < l; t++ {
+	//		fmt.Printf("%d ", buffer[t])
+	//	}
 
-	fmt.Printf("\n")
+	//	fmt.Printf("\n")
 
 	filter.InsertBulk(buffer)
 }
