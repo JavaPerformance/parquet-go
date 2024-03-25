@@ -221,7 +221,7 @@ func (splitBlockEncoding) EncodeFixedLenByteArray(dst []byte, src []byte, size i
 func splitBlockEncodeFixedLenByteArray(filter bloom.SplitBlockFilter, data []byte, size int) {
 	buffer := make([]uint64, 0, filterEncodeBufferSize)
 
-	fmt.Printf("input: ")
+	fmt.Printf("input: (%d) (%d) ", len(data), size)
 
 	for i, j := 0, size; j <= len(data); {
 
