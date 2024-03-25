@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/big"
 	"math/bits"
+	"strings"
 	"unsafe"
 )
 
@@ -30,7 +31,7 @@ func Int32ToInt96(value int32) (i96 Int96) {
 	return
 }
 
-func printInt32BitPattern(n int32) {
+func printInt32BitPattern(n uint32) {
 	bits := make([]string, 32)
 
 	for i := 0; i < 32; i++ {
