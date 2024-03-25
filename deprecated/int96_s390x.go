@@ -146,7 +146,7 @@ func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
 
 	for i := 0; i < len(data); i++ {
-		i96 = data[i]
+		i96 := data[i]
 		printInt32BitPattern(i96[0])
 		fmt.Print(" - ")
 		printInt32BitPattern(i96[1])
