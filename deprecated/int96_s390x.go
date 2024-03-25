@@ -50,7 +50,7 @@ func printInt32BitPattern(n uint32) {
 	// Join all bits into a single string
 	bitPattern := strings.Join(bits, "")
 
-	fmt.Println(bitPattern)
+	fmt.Print(bitPattern)
 }
 
 // Int64ToInt96 converts a int64 value to Int96.
