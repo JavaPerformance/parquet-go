@@ -16,10 +16,10 @@ type Int96 [3]uint32
 func Int32ToInt96(value int32) (i96 Int96) {
 	fmt.Print("Int32ToInt96\n")
 	if value < 0 {
-		i96[2] = 0xFFFFFFFF
-		i96[1] = 0xFFFFFFFF
+		i96[0] = 0xFFFFFFFF // was 2
+		i96[1] = 0xFFFFFFFF //was 1
 	}
-	i96[0] = uint32(value)
+	i96[2] = uint32(value) // was 0
 	return
 }
 
@@ -27,10 +27,10 @@ func Int32ToInt96(value int32) (i96 Int96) {
 func Int64ToInt96(value int64) (i96 Int96) {
 	fmt.Print("Int64ToInt96\n")
 	if value < 0 {
-		i96[2] = 0xFFFFFFFF
+		i96[0] = 0xFFFFFFFF // was 2
 	}
-	i96[1] = uint32(value >> 32)
-	i96[0] = uint32(value)
+	i96[1] = uint32(value >> 32) // was 1
+	i96[2] = uint32(value)       // was 0
 	return
 }
 
