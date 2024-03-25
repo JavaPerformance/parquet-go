@@ -20,7 +20,36 @@ func Int32ToInt96(value int32) (i96 Int96) {
 		i96[1] = 0xFFFFFFFF //was 1
 	}
 	i96[2] = uint32(value) // was 0
+
+	printInt32BitPattern(i96[0])
+	fmt.Print(" - ")
+	printInt32BitPattern(i96[1])
+	fmt.Print(" - ")
+	printInt32BitPattern(i96[2])
+
 	return
+}
+
+func printInt32BitPattern(n int32) {
+	bits := make([]string, 32)
+
+	for i := 0; i < 32; i++ {
+		if n&(1<<(31-i)) != 0 {
+			bits[i] = "1"
+		} else {
+			bits[i] = "0"
+		}
+	}
+
+	// Insert spaces between every 8 bits (1 byte)
+	for i := 8; i < 32; i += 9 {
+		bits = append(bits[:i], append([]string{" "}, bits[i:]...)...)
+	}
+
+	// Join all bits into a single string
+	bitPattern := strings.Join(bits, "")
+
+	fmt.Println(bitPattern)
 }
 
 // Int64ToInt96 converts a int64 value to Int96.
@@ -39,6 +68,7 @@ func (i Int96) IsZero() bool { return i == Int96{} }
 
 // Negative returns true if i is a negative value.
 func (i Int96) Negative() bool {
+	fmt.Print("Int96ToBytes\n")
 	return (i[2] >> 31) != 0
 }
 
@@ -46,6 +76,7 @@ func (i Int96) Negative() bool {
 //
 // The method implements a signed comparison between the two operands.
 func (i Int96) Less(j Int96) bool {
+	fmt.Print("Int96ToBytes\n")
 	if i.Negative() {
 		if !j.Negative() {
 			return true
@@ -69,6 +100,7 @@ func (i Int96) Less(j Int96) bool {
 
 // Int converts i to a big.Int representation.
 func (i Int96) Int() *big.Int {
+	fmt.Print("Int96ToBytes\n")
 	z := new(big.Int)
 	z.Or(z, big.NewInt(int64(i[2])<<32|int64(i[1])))
 	z.Lsh(z, 32)
@@ -78,21 +110,25 @@ func (i Int96) Int() *big.Int {
 
 // Int32 converts i to a int32, potentially truncating the value.
 func (i Int96) Int32() int32 {
+	fmt.Print("Int32\n")
 	return int32(i[0])
 }
 
 // Int64 converts i to a int64, potentially truncating the value.
 func (i Int96) Int64() int64 {
+	fmt.Print("Int64\n")
 	return int64(i[1])<<32 | int64(i[0])
 }
 
 // String returns a string representation of i.
 func (i Int96) String() string {
+	fmt.Print("String\n")
 	return i.Int().String()
 }
 
 // Len returns the minimum length in bits required to store the value of i.
 func (i Int96) Len() int {
+	fmt.Print("Len\n")
 	switch {
 	case i[2] != 0:
 		return 64 + bits.Len32(i[2])
@@ -107,6 +143,7 @@ func (i Int96) Len() int {
 // the same backing array.
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
+	printInt32BitPattern(int32(len(data)))
 	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 }
 
@@ -121,6 +158,7 @@ func BytesToInt96(data []byte) []Int96 {
 }
 
 func MaxLenInt96(data []Int96) int {
+	fmt.Print("MaxLenInt96\n")
 	max := 0
 	for i := range data {
 		n := data[i].Len()
@@ -132,6 +170,7 @@ func MaxLenInt96(data []Int96) int {
 }
 
 func MinInt96(data []Int96) (min Int96) {
+	fmt.Print("MinInt96\n")
 	if len(data) > 0 {
 		min = data[0]
 		for _, v := range data[1:] {
@@ -144,6 +183,7 @@ func MinInt96(data []Int96) (min Int96) {
 }
 
 func MaxInt96(data []Int96) (max Int96) {
+	fmt.Print("MaxInt96\n")
 	if len(data) > 0 {
 		max = data[0]
 		for _, v := range data[1:] {
@@ -156,6 +196,7 @@ func MaxInt96(data []Int96) (max Int96) {
 }
 
 func MinMaxInt96(data []Int96) (min, max Int96) {
+	fmt.Print("MinMaxInt96\n")
 	if len(data) > 0 {
 		min = data[0]
 		max = data[0]
@@ -172,6 +213,7 @@ func MinMaxInt96(data []Int96) (min, max Int96) {
 }
 
 func OrderOfInt96(data []Int96) int {
+	fmt.Print("OrderOfInt96\n")
 	if len(data) > 1 {
 		if int96AreInAscendingOrder(data) {
 			return +1
@@ -184,6 +226,7 @@ func OrderOfInt96(data []Int96) int {
 }
 
 func int96AreInAscendingOrder(data []Int96) bool {
+	fmt.Print("int96AreInAscendingOrder\n")
 	for i := len(data) - 1; i > 0; i-- {
 		if data[i].Less(data[i-1]) {
 			return false
@@ -193,6 +236,7 @@ func int96AreInAscendingOrder(data []Int96) bool {
 }
 
 func int96AreInDescendingOrder(data []Int96) bool {
+	fmt.Print("int96AreInDescendingOrder\n")
 	for i := len(data) - 1; i > 0; i-- {
 		if data[i-1].Less(data[i]) {
 			return false
