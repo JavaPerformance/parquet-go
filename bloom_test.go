@@ -78,6 +78,7 @@ func TestSplitBlockFilter(t *testing.T) {
 				fmt.Printf("3, %d\n", len(filter.Bytes()))
 				for _, v := range values {
 					fmt.Println("4")
+					fmt.Printf("4.5, %d\n", ValueOf(v))
 					if !check(filter, ValueOf(v)) {
 						return false
 					}
