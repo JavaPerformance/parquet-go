@@ -14,7 +14,7 @@ type Int96 [3]uint32
 
 // Int32ToInt96 converts a int32 value to a Int96.
 func Int32ToInt96(value int32) (i96 Int96) {
-	fmt.Print("Int32ToInt96")
+	fmt.Print("Int32ToInt96\n")
 	if value < 0 {
 		i96[2] = 0xFFFFFFFF
 		i96[1] = 0xFFFFFFFF
@@ -25,7 +25,7 @@ func Int32ToInt96(value int32) (i96 Int96) {
 
 // Int64ToInt96 converts a int64 value to Int96.
 func Int64ToInt96(value int64) (i96 Int96) {
-	fmt.Print("Int64ToInt96")
+	fmt.Print("Int64ToInt96\n")
 	if value < 0 {
 		i96[2] = 0xFFFFFFFF
 	}
@@ -106,7 +106,7 @@ func (i Int96) Len() int {
 // Int96ToBytes converts the slice of Int96 values to a slice of bytes sharing
 // the same backing array.
 func Int96ToBytes(data []Int96) []byte {
-	fmt.Print("Int96ToBytes")
+	fmt.Print("Int96ToBytes\n")
 	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 }
 
@@ -116,7 +116,7 @@ func Int96ToBytes(data []Int96) []byte {
 // When the number of bytes in the input is not a multiple of 12, the function
 // truncates it in the returned slice.
 func BytesToInt96(data []byte) []Int96 {
-	fmt.Print("BytesToInt96")
+	fmt.Print("BytesToInt96\n")
 	return unsafe.Slice(*(**Int96)(unsafe.Pointer(&data)), len(data)/12)
 }
 
