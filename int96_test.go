@@ -10,13 +10,16 @@ func TestInt96(t *testing.T) {
 
 	t.Log("**********************************************************")
 
-	i96 := deprecated.Int32ToInt96(1)
+	i96a := deprecated.Int32ToInt96(1)
+	i96b := deprecated.Int32ToInt96(2)
 
-	t.Logf("i96 = %v", i96)
+	t.Logf("i96 = %v", i96a)
+	t.Logf("i96 = %v", i96b)
 
-	int96Array := make([]deprecated.Int96, 1)
+	int96Array := make([]deprecated.Int96, 2)
 
-	int96Array[0] = i96
+	int96Array[0] = i96a
+	int96Array[1] = i96b
 
 	result := deprecated.Int96ToBytes(int96Array)
 
