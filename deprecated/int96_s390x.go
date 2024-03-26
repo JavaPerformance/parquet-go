@@ -33,7 +33,6 @@ func Int32ToInt96(value int32) (i96 Int96) {
 }
 
 func printInt32BitPattern(n uint32) {
-	fmt.Print("printInt32BitPattern\n")
 	bits := make([]string, 32)
 
 	for i := 0; i < 32; i++ {
