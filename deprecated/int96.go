@@ -24,25 +24,25 @@ func Int32ToInt96(value int32) (i96 Int96) {
 	return
 }
 
-func printInt32BitPattern(n uint32) {
+func PrintInt32BitPattern(n uint32) {
 
-	bits := make([]string, 32)
+	bitsx := make([]string, 32)
 
 	for i := 0; i < 32; i++ {
 		if n&(1<<(31-i)) != 0 {
-			bits[i] = "1"
+			bitsx[i] = "1"
 		} else {
-			bits[i] = "0"
+			bitsx[i] = "0"
 		}
 	}
 
 	// Insert spaces between every 8 bits (1 byte)
 	for i := 8; i < 32; i += 9 {
-		bits = append(bits[:i], append([]string{" "}, bits[i:]...)...)
+		bitsx = append(bitsx[:i], append([]string{" "}, bitsx[i:]...)...)
 	}
 
 	// Join all bits into a single string
-	bitPattern := strings.Join(bits, "")
+	bitPattern := strings.Join(bitsx, "")
 
 	fmt.Print(bitPattern)
 }
@@ -145,13 +145,14 @@ func Int96ToBytes(data []Int96) []byte {
 
 	for i := 0; i < len(data); i++ {
 		i96 := data[i]
-		printInt32BitPattern(i96[0])
+		PrintInt32BitPattern(i96[0])
 		fmt.Print(" - ")
-		printInt32BitPattern(i96[1])
+		PrintInt32BitPattern(i96[1])
 		fmt.Print(" - ")
-		printInt32BitPattern(i96[2])
+		PrintInt32BitPattern(i96[2])
 		fmt.Print("\n")
 	}
+	//fmt.Printf("%d\n", data[1024][0])
 
 	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 }
@@ -168,14 +169,14 @@ func BytesToInt96(data []byte) []Int96 {
 
 func MaxLenInt96(data []Int96) int {
 	fmt.Print("MaxLenInt96\n")
-	max := 0
+	maxx := 0
 	for i := range data {
 		n := data[i].Len()
-		if n > max {
-			max = n
+		if n > maxx {
+			maxx = n
 		}
 	}
-	return max
+	return maxx
 }
 
 func MinInt96(data []Int96) (min Int96) {

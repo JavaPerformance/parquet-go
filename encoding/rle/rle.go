@@ -51,7 +51,7 @@ func TestEncodeDecodeInt32(t *testing.T) {
 		t.Fatalf("Error encoding int32 slice: %v", err)
 	}
 
-	printByteArrayBitPattern(encoded)
+	PrintByteArrayBitPattern(encoded)
 
 	// Decode
 	t.Log("Decode")
@@ -67,7 +67,7 @@ func TestEncodeDecodeInt32(t *testing.T) {
 		t.Fatalf("Error decoding byte slice: %v", err)
 	}
 
-	printByteArrayBitPattern(buf)
+	PrintByteArrayBitPattern(buf)
 
 	//	for v := range src {
 	//		printInt32BitPattern(src[v])
@@ -135,7 +135,7 @@ func printInt32BitPattern(n int32) {
 	fmt.Println(bitPattern)
 }
 
-func printByteArrayBitPattern(bytes []byte) {
+func PrintByteArrayBitPattern(bytes []byte) {
 	var bitPatterns []string
 
 	for _, b := range bytes {
