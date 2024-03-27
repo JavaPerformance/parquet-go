@@ -40,15 +40,9 @@ func TestInt96(t *testing.T) {
 
 	rle.PrintByteArrayBitPattern(result)
 
-	t.Log("************************Int96ToBytesX**********************************")
+	t.Log("************************BytesToInt96**********************************")
 
-	result = deprecated.Int96ToBytesX(int96Array)
-
-	rle.PrintByteArrayBitPattern(result)
-
-	t.Log("**********************************************************")
-
-	int96ArrayIn := deprecated.BytesToInt96X(result)
+	int96ArrayIn := deprecated.BytesToInt96(result)
 
 	for i := 0; i < len(int96ArrayIn); i++ {
 		i96 := int96ArrayIn[i]
