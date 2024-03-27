@@ -33,7 +33,7 @@ func Int32ToInt96(value int32) (i96 Int96) {
 	return
 }
 
-func printInt32BitPattern(n uint32) {
+func PrintInt32BitPattern(n uint32) {
 	bits := make([]string, 32)
 
 	for i := 0; i < 32; i++ {
@@ -149,11 +149,11 @@ func Int96ToBytes(data []Int96) []byte {
 
 	for i := 0; i < len(data); i++ {
 		i96 := data[i]
-		printInt32BitPattern(i96[0])
+		PrintInt32BitPattern(i96[0])
 		fmt.Print(" - ")
-		printInt32BitPattern(i96[1])
+		PrintInt32BitPattern(i96[1])
 		fmt.Print(" - ")
-		printInt32BitPattern(i96[2])
+		PrintInt32BitPattern(i96[2])
 		fmt.Print("\n")
 	}
 
@@ -161,14 +161,15 @@ func Int96ToBytes(data []Int96) []byte {
 }
 
 func Int96ToBytesX(data []Int96) []byte {
+	fmt.Print("Int96ToBytesX\n")
 
 	for i := 0; i < len(data); i++ {
 		i96 := data[i]
-		printInt32BitPattern(i96[0])
+		PrintInt32BitPattern(i96[0])
 		fmt.Print(" - ")
-		printInt32BitPattern(i96[1])
+		PrintInt32BitPattern(i96[1])
 		fmt.Print(" - ")
-		printInt32BitPattern(i96[2])
+		PrintInt32BitPattern(i96[2])
 		fmt.Print("\n")
 	}
 
@@ -193,6 +194,27 @@ func Int96ToBytesX(data []Int96) []byte {
 func BytesToInt96(data []byte) []Int96 {
 	fmt.Print("BytesToInt96\n")
 	return unsafe.Slice(*(**Int96)(unsafe.Pointer(&data)), len(data)/12)
+}
+
+func BytesToInt96X(data []byte) []Int96 {
+	fmt.Print("BytesToInt96X\n")
+	if len(data)%12 != 0 {
+		// Handle potential error if input data length is not divisible by 12
+		return nil
+	}
+
+	result := make([]Int96, len(data)/12)
+
+	for i := 0; i < len(result); i++ {
+		start := i * 12
+		for j := 2; j >= 0; j-- {
+			value := binary.BigEndian.Uint32(data[start : start+4]) // Big endian conversion
+			result[i][j] = uint32(value)
+			start += 4
+		}
+	}
+
+	return result
 }
 
 func MaxLenInt96(data []Int96) int {

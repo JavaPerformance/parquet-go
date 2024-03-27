@@ -48,4 +48,18 @@ func TestInt96(t *testing.T) {
 
 	t.Log("**********************************************************")
 
+	int96ArrayIn := deprecated.BytesToInt96(result)
+
+	for i := 0; i < len(int96ArrayIn); i++ {
+		i96 := int96ArrayIn[i]
+		deprecated.PrintInt32BitPattern(i96[0])
+		fmt.Print(" - ")
+		deprecated.PrintInt32BitPattern(i96[1])
+		fmt.Print(" - ")
+		deprecated.PrintInt32BitPattern(i96[2])
+		fmt.Print("\n")
+	}
+
+	t.Log("**********************************************************")
+
 }
