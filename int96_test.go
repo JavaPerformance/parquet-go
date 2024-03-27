@@ -34,7 +34,15 @@ func TestInt96(t *testing.T) {
 	int96Array[0] = i96a
 	int96Array[1] = i96b
 
+	t.Log("************************Int96ToBytes**********************************")
+
 	result := deprecated.Int96ToBytes(int96Array)
+
+	rle.PrintByteArrayBitPattern(result)
+
+	t.Log("************************Int96ToBytesX**********************************")
+
+	result = deprecated.Int96ToBytesX(int96Array)
 
 	rle.PrintByteArrayBitPattern(result)
 

@@ -159,6 +159,30 @@ func Int96ToBytes(data []Int96) []byte {
 	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 }
 
+func Int96ToBytesX(data []Int96) []byte {
+
+	for i := 0; i < len(data); i++ {
+		i96 := data[i]
+		PrintInt32BitPattern(i96[0])
+		fmt.Print(" - ")
+		PrintInt32BitPattern(i96[1])
+		fmt.Print(" - ")
+		PrintInt32BitPattern(i96[2])
+		fmt.Print("\n")
+	}
+
+	result := make([]byte, 0, len(data)*12) // Pre-allocate for efficiency
+
+	for _, i96 := range data {
+		for _, i32 := range i96 {
+			buf := make([]byte, 4)
+			binary.BigEndian.PutUint32(buf, uint32(i32))
+			result = append(result, buf...)
+		}
+	}
+	return result
+}
+
 // BytesToInt96 converts the byte slice passed as argument to a slice of Int96
 // sharing the same backing array.
 //
