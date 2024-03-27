@@ -153,7 +153,7 @@ func (i Int96) Len() int {
 }
 
 func Int96ToBytes(data []Int96) []byte {
-	fmt.Print("Int96ToBytesX\n")
+	fmt.Print("Int96ToBytes\n")
 
 	for i := 0; i < len(data); i++ {
 		i96 := data[i]
@@ -185,7 +185,7 @@ func Int96ToBytes(data []Int96) []byte {
 // truncates it in the returned slice.
 
 func BytesToInt96(data []byte) []Int96 {
-	fmt.Print("BytesToInt96X\n")
+	fmt.Print("BytesToInt96\n")
 	if len(data)%12 != 0 {
 		// Handle potential error if input data length is not divisible by 12
 		return nil
