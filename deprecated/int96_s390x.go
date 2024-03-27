@@ -175,13 +175,13 @@ func Int96ToBytesX(data []Int96) []byte {
 	result := make([]byte, 0, len(data)*12) // Pre-allocate for efficiency
 
 	for _, i96 := range data {
-		for _, i32 := range i96 {
+		for i := 2; i >= 0; i-- { // Iterate in reverse
 			buf := make([]byte, 4)
-			//binary.BigEndian.PutUint32(buf, uint32(i32))
-			binary.LittleEndian.PutUint32(buf, uint32(i32))
+			binary.LittleEndian.PutUint32(buf, uint32(i96[i]))
 			result = append(result, buf...)
 		}
 	}
+
 	return result
 }
 
