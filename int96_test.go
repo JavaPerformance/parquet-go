@@ -1,3 +1,5 @@
+//go:build !s390x
+
 package parquet
 
 import (
