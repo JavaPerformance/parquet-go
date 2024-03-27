@@ -3,6 +3,7 @@
 package deprecated
 
 import (
+	"encoding/binary"
 	"fmt"
 	"math/big"
 	"math/bits"
@@ -163,11 +164,11 @@ func Int96ToBytesX(data []Int96) []byte {
 
 	for i := 0; i < len(data); i++ {
 		i96 := data[i]
-		PrintInt32BitPattern(i96[0])
+		printInt32BitPattern(i96[0])
 		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[1])
+		printInt32BitPattern(i96[1])
 		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[2])
+		printInt32BitPattern(i96[2])
 		fmt.Print("\n")
 	}
 
