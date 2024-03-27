@@ -23,11 +23,11 @@ func Int32ToInt96(value int32) (i96 Int96) {
 	}
 	i96[2] = uint32(value) // was 0
 
-	printInt32BitPattern(i96[0])
+	PrintInt32BitPattern(i96[0])
 	fmt.Print(" - ")
-	printInt32BitPattern(i96[1])
+	PrintInt32BitPattern(i96[1])
 	fmt.Print(" - ")
-	printInt32BitPattern(i96[2])
+	PrintInt32BitPattern(i96[2])
 	fmt.Print("\n")
 
 	return
