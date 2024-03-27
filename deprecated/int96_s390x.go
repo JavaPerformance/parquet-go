@@ -177,7 +177,8 @@ func Int96ToBytesX(data []Int96) []byte {
 	for _, i96 := range data {
 		for _, i32 := range i96 {
 			buf := make([]byte, 4)
-			binary.BigEndian.PutUint32(buf, uint32(i32))
+			//binary.BigEndian.PutUint32(buf, uint32(i32))
+			binary.LittleEndian.PutUint32(buf, uint32(i32))
 			result = append(result, buf...)
 		}
 	}
