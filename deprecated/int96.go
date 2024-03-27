@@ -191,27 +191,6 @@ func BytesToInt96(data []byte) []Int96 {
 	return unsafe.Slice(*(**Int96)(unsafe.Pointer(&data)), len(data)/12)
 }
 
-func BytesToInt96X(data []byte) []Int96 {
-	fmt.Print("BytesToInt96X\n")
-	if len(data)%12 != 0 {
-		// Handle potential error if input data length is not divisible by 12
-		return nil
-	}
-
-	result := make([]Int96, len(data)/12)
-
-	for i := 0; i < len(result); i++ {
-		start := i * 12
-		for j := 2; j >= 0; j-- {
-			value := binary.BigEndian.Uint32(data[start : start+4]) // Big endian conversion
-			result[i][j] = uint32(value)
-			start += 4
-		}
-	}
-
-	return result
-}
-
 func MaxLenInt96(data []Int96) int {
 	fmt.Print("MaxLenInt96\n")
 	maxx := 0

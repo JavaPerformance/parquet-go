@@ -8,7 +8,6 @@ import (
 	"math/big"
 	"math/bits"
 	"strings"
-	"unsafe"
 )
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
@@ -142,24 +141,6 @@ func (i Int96) Len() int {
 	}
 }
 
-// Int96ToBytes converts the slice of Int96 values to a slice of bytes sharing
-// the same backing array.
-func Int96ToBytesX(data []Int96) []byte {
-	fmt.Print("Int96ToBytes\n")
-
-	for i := 0; i < len(data); i++ {
-		i96 := data[i]
-		PrintInt32BitPattern(i96[0])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[1])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[2])
-		fmt.Print("\n")
-	}
-
-	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
-}
-
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytesX\n")
 
@@ -191,10 +172,6 @@ func Int96ToBytes(data []Int96) []byte {
 //
 // When the number of bytes in the input is not a multiple of 12, the function
 // truncates it in the returned slice.
-func BytesToInt96X(data []byte) []Int96 {
-	fmt.Print("BytesToInt96\n")
-	return unsafe.Slice(*(**Int96)(unsafe.Pointer(&data)), len(data)/12)
-}
 
 func BytesToInt96(data []byte) []Int96 {
 	fmt.Print("BytesToInt96X\n")

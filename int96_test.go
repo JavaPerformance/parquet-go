@@ -57,3 +57,26 @@ func TestInt96(t *testing.T) {
 	t.Log("**********************************************************")
 
 }
+
+func TestInt96Len(t *testing.T) {
+	testCases := []struct {
+		i           deprecated.Int96
+		expectedLen int
+	}{
+		{deprecated.Int96{0xFFFFFFFF, 0xFFFFFFFF, 1}, 65},
+		{deprecated.Int96{1 << 31, 1, 0}, 33},
+		{deprecated.Int96{0, 1 << 31, 0}, 64},
+		{deprecated.Int96{1 << 31, 0, 0}, 32},
+		{deprecated.Int96{123, 0, 0}, 7},
+		{deprecated.Int96{65535, 0, 0}, 16},
+		{deprecated.Int96{0, 0, 0}, 0},
+		{deprecated.Int96{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, 96}, // Fully set
+	}
+
+	for _, tc := range testCases {
+		result := tc.i.Len()
+		if result != tc.expectedLen {
+			t.Errorf("Expected Len() for %v to be %d, got %d", tc.i, tc.expectedLen, result)
+		}
+	}
+}
