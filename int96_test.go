@@ -75,6 +75,7 @@ func TestInt96Len(t *testing.T) {
 
 	for _, tc := range testCases {
 		result := tc.i.Len()
+		t.Errorf("Expected Len() for %v to be %d, got %d", tc.i, tc.expectedLen, result)
 		if result != tc.expectedLen {
 			t.Errorf("Expected Len() for %v to be %d, got %d", tc.i, tc.expectedLen, result)
 		}

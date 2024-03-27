@@ -71,7 +71,7 @@ func (i Int96) IsZero() bool { return i == Int96{} }
 // Negative returns true if i is a negative value.
 func (i Int96) Negative() bool {
 	fmt.Print("Int96ToBytes\n")
-	return (i[2] >> 31) != 0
+	return (i[0] >> 31) != 0
 }
 
 // Less returns true if i < j.
@@ -104,22 +104,22 @@ func (i Int96) Less(j Int96) bool {
 func (i Int96) Int() *big.Int {
 	fmt.Print("Int96ToBytes\n")
 	z := new(big.Int)
-	z.Or(z, big.NewInt(int64(i[2])<<32|int64(i[1])))
+	z.Or(z, big.NewInt(int64(i[0])<<32|int64(i[1])))
 	z.Lsh(z, 32)
-	z.Or(z, big.NewInt(int64(i[0])))
+	z.Or(z, big.NewInt(int64(i[2])))
 	return z
 }
 
 // Int32 converts i to a int32, potentially truncating the value.
 func (i Int96) Int32() int32 {
 	fmt.Print("Int32\n")
-	return int32(i[0])
+	return int32(i[2])
 }
 
 // Int64 converts i to a int64, potentially truncating the value.
 func (i Int96) Int64() int64 {
 	fmt.Print("Int64\n")
-	return int64(i[1])<<32 | int64(i[0])
+	return int64(i[1])<<32 | int64(i[2])
 }
 
 // String returns a string representation of i.
@@ -132,12 +132,12 @@ func (i Int96) String() string {
 func (i Int96) Len() int {
 	fmt.Print("Len\n")
 	switch {
-	case i[2] != 0:
+	case i[0] != 0:
 		return 64 + bits.Len32(i[2])
 	case i[1] != 0:
 		return 32 + bits.Len32(i[1])
 	default:
-		return bits.Len32(i[0])
+		return bits.Len32(i[2])
 	}
 }
 
