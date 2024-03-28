@@ -115,9 +115,9 @@ func (i Int96) Less(j Int96) bool {
 func (i Int96) Int() *big.Int {
 	fmt.Print("Int96ToBytes\n")
 	z := new(big.Int)
-	z.Or(z, big.NewInt(int64(i[0])<<32|int64(i[1])))
+	z.Or(z, big.NewInt(int64(i[2])<<32|int64(i[1])))
 	z.Lsh(z, 32)
-	z.Or(z, big.NewInt(int64(i[2])))
+	z.Or(z, big.NewInt(int64(i[0])))
 	return z
 }
 
