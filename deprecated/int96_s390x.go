@@ -144,7 +144,7 @@ func (i Int96) Len() int {
 	fmt.Print("Len\n")
 	switch {
 	case i[0] != 0:
-		return 64 + bits.Len32(i[2])
+		return 64 + bits.Len32(i[0])
 	case i[1] != 0:
 		return 32 + bits.Len32(i[1])
 	default:
