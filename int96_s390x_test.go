@@ -1,4 +1,4 @@
-//go:build s390x
+//go:build s390xx
 
 package parquet
 
