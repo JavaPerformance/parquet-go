@@ -23,6 +23,9 @@ func TestSplitBlockFilter(t *testing.T) {
 		fmt.Printf("%d\n", hash)
 		//		fmt.Printf("%s %d\n", value.string(), hash)
 		//		fmt.Printf("%d\n", hash)
+		if !filter.Check(hash) {
+			fmt.Printf("not ok\n")
+		}
 		return filter.Check(hash)
 		//		return filter.Check(value.hash(&bloom.XXH64{}))
 	}
@@ -85,6 +88,7 @@ func TestSplitBlockFilter(t *testing.T) {
 					fmt.Println("4")
 					fmt.Printf("4.5, %d\n", ValueOf(v))
 					if !check(filter, ValueOf(v)) {
+						fmt.Printf("not ok\n")
 						return false
 					}
 				}
