@@ -374,6 +374,8 @@ func makeValueInt64(value int64) Value {
 	}
 }
 
+// TODO Here!!!
+
 func makeValueInt96(value deprecated.Int96) Value {
 	// TODO: this is highly inefficient because we need a heap allocation to
 	// store the value; we don't expect INT96 to be used frequently since it
@@ -383,6 +385,9 @@ func makeValueInt96(value deprecated.Int96) Value {
 	binary.LittleEndian.PutUint32(bits[0:4], value[0])
 	binary.LittleEndian.PutUint32(bits[4:8], value[1])
 	binary.LittleEndian.PutUint32(bits[8:12], value[2])
+
+	deprecated.PrintInt96BitPattern(value)
+
 	return Value{
 		kind: ^int8(Int96),
 		ptr:  &bits[0],
@@ -791,6 +796,8 @@ func (v Value) Clone() Value {
 	}
 	return v
 }
+
+// TODO Here!!!
 
 func makeInt96(bits []byte) (i96 deprecated.Int96) {
 	return deprecated.Int96{

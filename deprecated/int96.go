@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"math/big"
 	"math/bits"
-	"strings"
 	"unsafe"
 )
 
@@ -25,39 +24,6 @@ func Int32ToInt96(value int32) (i96 Int96) {
 	}
 	i96[0] = uint32(value)
 	return
-}
-
-func PrintInt96BitPattern(i96 Int96) {
-
-	PrintInt32BitPattern(i96[0])
-	fmt.Print(" - ")
-	PrintInt32BitPattern(i96[1])
-	fmt.Print(" - ")
-	PrintInt32BitPattern(i96[2])
-	fmt.Print("\n")
-}
-
-func PrintInt32BitPattern(n uint32) {
-
-	bitsx := make([]string, 32)
-
-	for i := 0; i < 32; i++ {
-		if n&(1<<(31-i)) != 0 {
-			bitsx[i] = "1"
-		} else {
-			bitsx[i] = "0"
-		}
-	}
-
-	// Insert spaces between every 8 bits (1 byte)
-	for i := 8; i < 32; i += 9 {
-		bitsx = append(bitsx[:i], append([]string{" "}, bitsx[i:]...)...)
-	}
-
-	// Join all bits into a single string
-	bitPattern := strings.Join(bitsx, "")
-
-	fmt.Print(bitPattern)
 }
 
 // Int64ToInt96 converts a int64 value to Int96.

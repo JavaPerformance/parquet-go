@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"math/big"
 	"math/bits"
-	"strings"
 )
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
@@ -33,39 +32,6 @@ func Int32ToInt96(value int32) (i96 Int96) {
 		fmt.Print("\n")
 	}
 	return
-}
-
-func PrintInt96BitPattern(i96 Int96) {
-
-	PrintInt32BitPattern(i96[0])
-	fmt.Print(" - ")
-	PrintInt32BitPattern(i96[1])
-	fmt.Print(" - ")
-	PrintInt32BitPattern(i96[2])
-	fmt.Print("\n")
-
-}
-
-func PrintInt32BitPattern(n uint32) {
-	bits := make([]string, 32)
-
-	for i := 0; i < 32; i++ {
-		if n&(1<<(31-i)) != 0 {
-			bits[i] = "1"
-		} else {
-			bits[i] = "0"
-		}
-	}
-
-	// Insert spaces between every 8 bits (1 byte)
-	for i := 8; i < 32; i += 9 {
-		bits = append(bits[:i], append([]string{" "}, bits[i:]...)...)
-	}
-
-	// Join all bits into a single string
-	bitPattern := strings.Join(bits, "")
-
-	fmt.Print(bitPattern)
 }
 
 // Int64ToInt96 converts a int64 value to Int96.
@@ -177,6 +143,8 @@ func Int96ToBytes(data []Int96) []byte {
 			result = append(result, buf...)
 		}
 	}
+
+	PrintBitsWithSpaces(result)
 
 	return result
 }
