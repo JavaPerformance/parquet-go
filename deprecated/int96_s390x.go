@@ -328,7 +328,7 @@ func BytesToInt96(data []byte) []Int96 {
 		}
 	}
 
-	PrintBitsWithSpaces(result)
+	PrintBitsWithSpaces(data)
 	fmt.Print(" \n")
 
 	return result
