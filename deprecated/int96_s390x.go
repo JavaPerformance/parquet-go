@@ -262,7 +262,7 @@ func Int96ToBytes(data []Int96) []byte {
 	result := make([]byte, 0, len(data)*12) // Pre-allocate for efficiency
 
 	for _, i96 := range data {
-		for i := 0; i >= 2; i++ { // Iterate in reverse
+		for i := 0; i <= 2; i++ { // Iterate in reverse
 			buf := make([]byte, 4)
 			binary.LittleEndian.PutUint32(buf, uint32(i96[i]))
 			result = append(result, buf...)
