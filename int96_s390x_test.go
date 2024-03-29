@@ -60,33 +60,34 @@ func TestInt96(t *testing.T) {
 
 }
 
-func TestInt96LenX(t *testing.T) {
-	testCases := []struct {
-		i           deprecated.Int96
-		expectedLen int
-	}{
-		{deprecated.Int96{1, 0xFFFFFFFF, 0xFFFFFFFF}, 65},
-		{deprecated.Int96{0, 1, 1 << 31}, 33},
-		{deprecated.Int96{0, 1 << 31, 0}, 64},
-		{deprecated.Int96{0, 0, 1 << 31}, 32},
-		{deprecated.Int96{0, 0, 123}, 7},
-		{deprecated.Int96{0, 0, 65535}, 16},
-		{deprecated.Int96{0, 0, 0}, 0},
-		{deprecated.Int96{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, 96},
-	}
+/*
+	func TestInt96LenX(t *testing.T) {
+		testCases := []struct {
+			i           deprecated.Int96
+			expectedLen int
+		}{
+			{deprecated.Int96{1, 0xFFFFFFFF, 0xFFFFFFFF}, 65},
+			{deprecated.Int96{0, 1, 1 << 31}, 33},
+			{deprecated.Int96{0, 1 << 31, 0}, 64},
+			{deprecated.Int96{0, 0, 1 << 31}, 32},
+			{deprecated.Int96{0, 0, 123}, 7},
+			{deprecated.Int96{0, 0, 65535}, 16},
+			{deprecated.Int96{0, 0, 0}, 0},
+			{deprecated.Int96{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, 96},
+		}
 
-	for _, tc := range testCases {
+		for _, tc := range testCases {
 
-		deprecated.PrintInt96BitPattern(tc.i)
-		result := tc.i.Len()
+			deprecated.PrintInt96BitPattern(tc.i)
+			result := tc.i.Len()
 
-		//		t.Logf("PASS Len() for %v to be %d, got %d", tc.i, tc.expectedLen, result)
-		if result != tc.expectedLen {
-			t.Errorf("Expected Len() for %v to be %d, got %d", tc.i, tc.expectedLen, result)
+			//		t.Logf("PASS Len() for %v to be %d, got %d", tc.i, tc.expectedLen, result)
+			if result != tc.expectedLen {
+				t.Errorf("Expected Len() for %v to be %d, got %d", tc.i, tc.expectedLen, result)
+			}
 		}
 	}
-}
-
+*/
 func TestInt96Len(t *testing.T) {
 	testCases := []struct {
 		i           deprecated.Int96
