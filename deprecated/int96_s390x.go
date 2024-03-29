@@ -5,6 +5,8 @@ package deprecated
 import (
 	"encoding/binary"
 	"fmt"
+	"math/big"
+	"math/bits"
 )
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
