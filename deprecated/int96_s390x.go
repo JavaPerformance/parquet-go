@@ -319,7 +319,7 @@ func BytesToInt96(data []byte) []Int96 {
 
 	for i := 0; i < len(result); i++ {
 		start := i * 12
-		for j := 0; j >= 2; j++ {
+		for j := 0; j <= 2; j++ {
 			value := binary.LittleEndian.Uint32(data[start : start+4]) // Big endian conversion
 			result[i][j] = uint32(value)
 			start += 4
