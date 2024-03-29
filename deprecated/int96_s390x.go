@@ -11,6 +11,9 @@ import (
 )
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
+
+var debugEnabled bool = false
+
 type Int96 [3]uint32
 
 // Int32ToInt96 converts a int32 value to a Int96.
@@ -21,14 +24,14 @@ func Int32ToInt96(value int32) (i96 Int96) {
 		i96[1] = 0xFFFFFFFF //was 1
 	}
 	i96[2] = uint32(value) // was 0
-
-	PrintInt32BitPattern(i96[0])
-	fmt.Print(" - ")
-	PrintInt32BitPattern(i96[1])
-	fmt.Print(" - ")
-	PrintInt32BitPattern(i96[2])
-	fmt.Print("\n")
-
+	if debugEnabled {
+		PrintInt32BitPattern(i96[0])
+		fmt.Print(" - ")
+		PrintInt32BitPattern(i96[1])
+		fmt.Print(" - ")
+		PrintInt32BitPattern(i96[2])
+		fmt.Print("\n")
+	}
 	return
 }
 
@@ -154,17 +157,17 @@ func (i Int96) Len() int {
 
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
-
-	for i := 0; i < len(data); i++ {
-		i96 := data[i]
-		PrintInt32BitPattern(i96[0])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[1])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[2])
-		fmt.Print("\n")
+	if debugEnabled {
+		for i := 0; i < len(data); i++ {
+			i96 := data[i]
+			PrintInt32BitPattern(i96[0])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[1])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[2])
+			fmt.Print("\n")
+		}
 	}
-
 	result := make([]byte, 0, len(data)*12) // Pre-allocate for efficiency
 
 	for _, i96 := range data {

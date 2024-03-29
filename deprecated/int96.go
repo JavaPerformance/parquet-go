@@ -11,6 +11,9 @@ import (
 )
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
+
+var debugEnabled bool = false
+
 type Int96 [3]uint32
 
 // Int32ToInt96 converts a int32 value to a Int96.
@@ -153,16 +156,17 @@ func (i Int96) Len() int {
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
 
-	for i := 0; i < len(data); i++ {
-		i96 := data[i]
-		PrintInt32BitPattern(i96[2])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[1])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[0])
-		fmt.Print("\n")
+	if debugEnabled {
+		for i := 0; i < len(data); i++ {
+			i96 := data[i]
+			PrintInt32BitPattern(i96[2])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[1])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[0])
+			fmt.Print("\n")
+		}
 	}
-
 	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 }
 
@@ -177,7 +181,9 @@ func BytesToInt96(data []byte) []Int96 {
 }
 
 func MaxLenInt96(data []Int96) int {
-	fmt.Print("MaxLenInt96\n")
+	if debugEnabled {
+		fmt.Print("MaxLenInt96\n")
+	}
 	maxx := 0
 	for i := range data {
 		n := data[i].Len()
