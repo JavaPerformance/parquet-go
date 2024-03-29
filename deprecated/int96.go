@@ -121,21 +121,22 @@ func (i Int96) Len() int {
 // the same backing array.
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
-	for i := 0; i < len(data); i++ {
-		i96 := data[i]
-		fmt.Printf("%d : %x %x %x ", i, i96[0], i96[1], i96[2])
-		PrintInt32BitPattern(i96[0])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[1])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[2])
-		fmt.Print("\n")
-	}
-
+	/*
+		for i := 0; i < len(data); i++ {
+			i96 := data[i]
+			fmt.Printf("%d : %x %x %x ", i, i96[0], i96[1], i96[2])
+			PrintInt32BitPattern(i96[0])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[1])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[2])
+			fmt.Print("\n")
+		}
+	*/
 	buffer := unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 
-	fmt.Print("> ")
-	PrintBitsWithSpaces(buffer)
+	//	fmt.Print("> ")
+	//	PrintBitsWithSpaces(buffer)
 
 	return buffer
 

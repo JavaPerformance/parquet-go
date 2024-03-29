@@ -386,7 +386,7 @@ func makeValueInt96(value deprecated.Int96) Value {
 	binary.LittleEndian.PutUint32(bits[4:8], value[1])
 	binary.LittleEndian.PutUint32(bits[8:12], value[2])
 
-	deprecated.PrintInt96BitPattern(value)
+	//deprecated.PrintInt96BitPattern(value)
 
 	return Value{
 		kind: ^int8(Int96),

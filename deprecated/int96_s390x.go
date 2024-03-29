@@ -5,8 +5,6 @@ package deprecated
 import (
 	"encoding/binary"
 	"fmt"
-	"math/big"
-	"math/bits"
 )
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
@@ -23,14 +21,14 @@ func Int32ToInt96X(value int32) (i96 Int96) {
 		i96[1] = 0xFFFFFFFF //was 1
 	}
 	i96[2] = uint32(value) // was 0
-	if debugEnabled {
+	/*	if debugEnabled {
 		PrintInt32BitPattern(i96[0])
 		fmt.Print(" - ")
 		PrintInt32BitPattern(i96[1])
 		fmt.Print(" - ")
 		PrintInt32BitPattern(i96[2])
 		fmt.Print("\n")
-	}
+	} */
 	return
 }
 
@@ -41,14 +39,14 @@ func Int32ToInt96(value int32) (i96 Int96) {
 		i96[1] = 0xFFFFFFFF //was 1
 	}
 	i96[0] = uint32(value) // was 0
-	if debugEnabled {
+	/*	if debugEnabled {
 		PrintInt32BitPattern(i96[0])
 		fmt.Print(" - ")
 		PrintInt32BitPattern(i96[1])
 		fmt.Print(" - ")
 		PrintInt32BitPattern(i96[2])
 		fmt.Print("\n")
-	}
+	} */
 	return
 }
 
@@ -219,17 +217,18 @@ func (i Int96) Len() int {
 
 func Int96ToBytesX(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
-	for i := 0; i < len(data); i++ {
-		i96 := data[i]
-		fmt.Printf("%d : %x %x %x ", i, i96[0], i96[1], i96[2])
-		PrintInt32BitPattern(i96[0])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[1])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[2])
-		fmt.Print("\n")
-	}
-
+	/*
+		for i := 0; i < len(data); i++ {
+			i96 := data[i]
+			fmt.Printf("%d : %x %x %x ", i, i96[0], i96[1], i96[2])
+			PrintInt32BitPattern(i96[0])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[1])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[2])
+			fmt.Print("\n")
+		}
+	*/
 	result := make([]byte, 0, len(data)*12) // Pre-allocate for efficiency
 
 	for _, i96 := range data {
@@ -240,25 +239,26 @@ func Int96ToBytesX(data []Int96) []byte {
 		}
 	}
 
-	fmt.Print("> ")
-	PrintBitsWithSpaces(result)
+	//	fmt.Print("> ")
+	//	PrintBitsWithSpaces(result)
 
 	return result
 }
 
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
-	for i := 0; i < len(data); i++ {
-		i96 := data[i]
-		fmt.Printf("%d : %x %x %x ", i, i96[0], i96[1], i96[2])
-		PrintInt32BitPattern(i96[0])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[1])
-		fmt.Print(" - ")
-		PrintInt32BitPattern(i96[2])
-		fmt.Print("\n")
-	}
-
+	/*
+		for i := 0; i < len(data); i++ {
+			i96 := data[i]
+			fmt.Printf("%d : %x %x %x ", i, i96[0], i96[1], i96[2])
+			PrintInt32BitPattern(i96[0])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[1])
+			fmt.Print(" - ")
+			PrintInt32BitPattern(i96[2])
+			fmt.Print("\n")
+		}
+	*/
 	result := make([]byte, 0, len(data)*12) // Pre-allocate for efficiency
 
 	for _, i96 := range data {
@@ -269,8 +269,8 @@ func Int96ToBytes(data []Int96) []byte {
 		}
 	}
 
-	fmt.Print("> ")
-	PrintBitsWithSpaces(result)
+	//	fmt.Print("> ")
+	//	PrintBitsWithSpaces(result)
 
 	return result
 }
@@ -328,7 +328,7 @@ func BytesToInt96(data []byte) []Int96 {
 		}
 	}
 
-	PrintBitsWithSpaces(data)
+	//PrintBitsWithSpaces(data)
 	fmt.Print(" \n")
 
 	return result
