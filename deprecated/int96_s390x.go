@@ -309,9 +309,10 @@ func BytesToInt96X(data []byte) []Int96 {
 // truncates it in the returned slice.
 
 func BytesToInt96(data []byte) []Int96 {
-	fmt.Print("BytesToInt96\n")
+	fmt.Print("BytesToInt96 ")
 	if len(data)%12 != 0 {
 		// Handle potential error if input data length is not divisible by 12
+		fmt.Print(" \n")
 		return nil
 	}
 
@@ -326,6 +327,9 @@ func BytesToInt96(data []byte) []Int96 {
 			start += 4
 		}
 	}
+
+	PrintBitsWithSpaces(result)
+	fmt.Print(" \n")
 
 	return result
 }
