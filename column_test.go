@@ -48,15 +48,30 @@ func TestColumnPageIndex(t *testing.T) {
 				{
 					scenario: "int64",
 					function: func(t *testing.T) interface{} {
-						fmt.Println("HERE!!!")
-						return func(rows []struct{ Value int64 }) bool { return config.test(t, makeRows(rows)) }
+						fmt.Println("HERE int64 >>>")
+
+						b := func(rows []struct{ Value int64 }) bool { return config.test(t, makeRows(rows)) }
+
+						//						return func(rows []struct{ Value int64 }) bool { return config.test(t, makeRows(rows)) }
+
+						fmt.Println("HERE Int64 <<<")
+
+						return b
+
 					},
 				},
 
 				{
 					scenario: "int96",
 					function: func(t *testing.T) interface{} {
-						return func(rows []struct{ Value deprecated.Int96 }) bool { return config.test(t, makeRows(rows)) }
+						fmt.Println("HERE Int96 >>>")
+
+						b := func(rows []struct{ Value deprecated.Int96 }) bool { return config.test(t, makeRows(rows)) }
+
+						//return func(rows []struct{ Value deprecated.Int96 }) bool { return config.test(t, makeRows(rows)) }
+						fmt.Println("HERE Int96 <<<")
+
+						return b
 					},
 				},
 
