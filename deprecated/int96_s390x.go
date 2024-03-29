@@ -123,17 +123,17 @@ func (i Int96) Len() int {
 
 func Int96ToBytes(data []Int96) []byte {
 	fmt.Print("Int96ToBytes\n")
-	if debugEnabled {
-		for i := 0; i < len(data); i++ {
-			i96 := data[i]
-			PrintInt32BitPattern(i96[0])
-			fmt.Print(" - ")
-			PrintInt32BitPattern(i96[1])
-			fmt.Print(" - ")
-			PrintInt32BitPattern(i96[2])
-			fmt.Print("\n")
-		}
+	for i := 0; i < len(data); i++ {
+		i96 := data[i]
+		fmt.Printf("%d : %x %x %x ", i, i96[0], i96[1], i96[2])
+		PrintInt32BitPattern(i96[0])
+		fmt.Print(" - ")
+		PrintInt32BitPattern(i96[1])
+		fmt.Print(" - ")
+		PrintInt32BitPattern(i96[2])
+		fmt.Print("\n")
 	}
+
 	result := make([]byte, 0, len(data)*12) // Pre-allocate for efficiency
 
 	for _, i96 := range data {

@@ -1,7 +1,6 @@
 package parquet
 
 import (
-	"fmt"
 	"math/rand"
 	"testing"
 
@@ -20,12 +19,6 @@ func TestSplitBlockFilter(t *testing.T) {
 
 	check := func(filter bloom.SplitBlockFilter, value Value) bool {
 		hash := value.hash(&bloom.XXH64{})
-		fmt.Printf("%d\n", hash)
-		//		fmt.Printf("%s %d\n", value.string(), hash)
-		//		fmt.Printf("%d\n", hash)
-		if !filter.Check(hash) {
-			fmt.Printf("not ok\n")
-		}
 		return filter.Check(hash)
 		//		return filter.Check(value.hash(&bloom.XXH64{}))
 	}
@@ -79,20 +72,13 @@ func TestSplitBlockFilter(t *testing.T) {
 		{
 			scenario: "INT96",
 			function: func(values []deprecated.Int96) bool {
-				fmt.Println("1")
 				filter := newFilter(len(values))
-				fmt.Printf("2 , %d\n", len(values))
 				enc.EncodeInt96(filter.Bytes(), values)
-				fmt.Printf("3, %d\n", len(filter.Bytes()))
 				for _, v := range values {
-					fmt.Println("4")
-					fmt.Printf("4.5, %d\n", ValueOf(v))
 					if !check(filter, ValueOf(v)) {
-						fmt.Printf("not ok\n")
 						return false
 					}
 				}
-				fmt.Println("5")
 				return true
 			},
 		},
