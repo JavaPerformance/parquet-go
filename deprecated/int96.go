@@ -133,7 +133,14 @@ func Int96ToBytes(data []Int96) []byte {
 			fmt.Print("\n")
 		}
 	}
-	return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
+
+	buffer := unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
+
+	PrintBitsWithSpaces(buffer)
+
+	return buffer
+
+	//return unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 }
 
 // BytesToInt96 converts the byte slice passed as argument to a slice of Int96

@@ -115,3 +115,25 @@ func TestMaxLenInt96(t *testing.T) {
 		})
 	}
 }
+
+func TestInt96ToBytes(t *testing.T) {
+	for _, test := range []struct {
+		data []deprecated.Int96
+	}{
+		{
+			data: nil,
+		},
+
+		{
+			data: []deprecated.Int96{{}, {}, {}, {}, {}},
+		},
+
+		{
+			data: []deprecated.Int96{{0: 0x01}, {0: 0xFF}, {1: 0x02}, {0: 0xF0}},
+		},
+	} {
+		t.Run("", func(t *testing.T) {
+			deprecated.PrintBitsWithSpaces(deprecated.Int96ToBytes(test.data))
+		})
+	}
+}
