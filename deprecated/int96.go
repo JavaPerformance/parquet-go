@@ -134,7 +134,8 @@ func Int96ToBytes(data []Int96) []byte {
 
 	buffer := unsafe.Slice(*(**byte)(unsafe.Pointer(&data)), 12*len(data))
 
-	//PrintBitsWithSpaces(buffer)
+	fmt.Print("> ")
+	PrintBitsWithSpaces(buffer)
 
 	return buffer
 
