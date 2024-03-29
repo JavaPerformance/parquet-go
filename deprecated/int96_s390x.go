@@ -190,6 +190,7 @@ func (i Int96) String() string {
 }
 
 // Len returns the minimum length in bits required to store the value of i.
+/*
 func (i Int96) LenX() int {
 	fmt.Print("Len\n")
 	switch {
@@ -201,6 +202,7 @@ func (i Int96) LenX() int {
 		return bits.Len32(i[2])
 	}
 }
+*/
 
 // Len returns the minimum length in bits required to store the value of i.
 func (i Int96) Len() int {
