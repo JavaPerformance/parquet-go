@@ -276,13 +276,13 @@ var bufferTests = [...]struct {
 		scenario: "boolean",
 		typ:      parquet.BooleanType,
 		values: [][]interface{}{
-			{},
-			{false},
 			{true},
 			{
 				false, true, false, false, true, true,
 				false, false, false, true, false, true,
 			},
+			{},
+			{false},
 		},
 	},
 

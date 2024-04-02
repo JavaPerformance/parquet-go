@@ -11,7 +11,7 @@ import (
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
 
-var debugEnabled bool = false
+//var debugEnabled bool = false
 
 type Int96 [3]uint32
 
@@ -154,9 +154,9 @@ func BytesToInt96(data []byte) []Int96 {
 }
 
 func MaxLenInt96(data []Int96) int {
-	if debugEnabled {
-		fmt.Print("MaxLenInt96\n")
-	}
+	fmt.Print("MaxLenInt96\n")
+	//	if debugEnabled {
+	//	}
 	maxx := 0
 	for i := range data {
 		n := data[i].Len()

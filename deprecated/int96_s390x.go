@@ -11,7 +11,7 @@ import (
 
 // Int96 is an implementation of the deprecated INT96 parquet type.
 
-var debugEnabled bool = false
+//var debugEnabled bool = false
 
 type Int96 [3]uint32
 
