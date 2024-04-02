@@ -1,6 +1,7 @@
 package parquet
 
 import (
+	"fmt"
 	"io"
 	"sort"
 
@@ -262,6 +263,7 @@ func (p *rowBufferPage) Clone() Page {
 }
 
 func (p *rowBufferPage) Slice(i, j int64) Page {
+	fmt.Println("row_buffer.go Slice")
 	return &rowBufferPage{
 		rows:   p.rows[i:j],
 		typ:    p.typ,

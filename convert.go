@@ -491,6 +491,7 @@ func (p missingPage) NumValues() int64                  { return p.numValues }
 func (p missingPage) NumNulls() int64                   { return p.numNulls }
 func (p missingPage) Bounds() (min, max Value, ok bool) { return }
 func (p missingPage) Slice(i, j int64) Page {
+	fmt.Println("convert.go Slice")
 	return missingPage{
 		&missingColumnChunk{
 			typ:       p.typ,

@@ -96,6 +96,7 @@ func TestEncodeDecodeInt32(t *testing.T) {
 }
 
 func byteArrayToInt32Slice(b []byte, byteOrder binary.ByteOrder) ([]int32, error) {
+
 	if len(b)%4 != 0 {
 		return nil, fmt.Errorf("byte slice length must be a multiple of 4")
 	}

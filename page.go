@@ -374,6 +374,7 @@ func (page *optionalPage) Values() ValueReader {
 }
 
 func (page *optionalPage) Slice(i, j int64) Page {
+	fmt.Println("page.go *optionalPagePage.Slice")
 	maxDefinitionLevel := page.maxDefinitionLevel
 	definitionLevels := page.definitionLevels
 	numNulls1 := int64(countLevelsNotEqual(definitionLevels[:i], maxDefinitionLevel))
@@ -437,6 +438,7 @@ func (page *repeatedPage) Values() ValueReader {
 }
 
 func (page *repeatedPage) Slice(i, j int64) Page {
+	fmt.Println("page.go repeatedPage.Slice")
 	numRows := page.NumRows()
 	if i < 0 || i > numRows {
 		panic(errPageBoundsOutOfRange(i, j, numRows))
@@ -585,6 +587,7 @@ func (page *booleanPage) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *booleanPage) Slice(i, j int64) Page {
+	fmt.Println("page.go booleanPage.Slice")
 	lowWithOffset := i + int64(page.offset)
 	highWithOffset := j + int64(page.offset)
 
@@ -662,6 +665,7 @@ func (page *int32Page) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *int32Page) Slice(i, j int64) Page {
+	fmt.Println("page.go int32Page.Slice")
 	return &int32Page{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -727,6 +731,7 @@ func (page *int64Page) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *int64Page) Slice(i, j int64) Page {
+	fmt.Println("page.go int64Page.Slice")
 	return &int64Page{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -794,6 +799,7 @@ func (page *int96Page) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *int96Page) Slice(i, j int64) Page {
+	fmt.Println("page.go int96Page.Slice")
 	return &int96Page{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -859,6 +865,7 @@ func (page *floatPage) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *floatPage) Slice(i, j int64) Page {
+	fmt.Println("page.go floatPage.Slice")
 	return &floatPage{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -924,6 +931,7 @@ func (page *doublePage) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *doublePage) Slice(i, j int64) Page {
+	fmt.Println("page.go doublePage.Slice")
 	return &doublePage{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -1057,6 +1065,7 @@ func (page *byteArrayPage) cloneOffsets() []uint32 {
 }
 
 func (page *byteArrayPage) Slice(i, j int64) Page {
+	fmt.Println("page.go bytearrayPage.Slice")
 	return &byteArrayPage{
 		typ:         page.typ,
 		values:      page.values,
@@ -1138,6 +1147,7 @@ func (page *fixedLenByteArrayPage) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *fixedLenByteArrayPage) Slice(i, j int64) Page {
+	fmt.Println("page.go fixedLenByteArrayPage.Slice")
 	return &fixedLenByteArrayPage{
 		typ:         page.typ,
 		data:        page.data[i*int64(page.size) : j*int64(page.size)],
@@ -1210,6 +1220,8 @@ func (page *uint32Page) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *uint32Page) Slice(i, j int64) Page {
+	fmt.Println("page.go uint32Page.Slice")
+
 	return &uint32Page{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -1275,6 +1287,8 @@ func (page *uint64Page) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *uint64Page) Slice(i, j int64) Page {
+	fmt.Println("page.go uint64Page.Slice")
+
 	return &uint64Page{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -1340,6 +1354,8 @@ func (page *be128Page) Bounds() (min, max Value, ok bool) {
 }
 
 func (page *be128Page) Slice(i, j int64) Page {
+	fmt.Println("page.go be128Page.Slice")
+
 	return &be128Page{
 		typ:         page.typ,
 		values:      page.values[i:j],
@@ -1389,6 +1405,7 @@ func (page *nullPage) Values() ValueReader {
 	return &nullPageValues{column: page.column, remain: page.count}
 }
 func (page *nullPage) Slice(i, j int64) Page {
+	fmt.Println("page.go nullPage.Slice")
 	return &nullPage{column: page.column, count: page.count - int(j-i)}
 }
 func (page *nullPage) RepetitionLevels() []byte { return nil }

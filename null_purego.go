@@ -2,7 +2,10 @@
 
 package parquet
 
-import "github.com/parquet-go/parquet-go/sparse"
+import (
+	"fmt"
+	"github.com/parquet-go/parquet-go/sparse"
+)
 
 func nullIndexBool(bits []uint64, rows sparse.Array) {
 	nullIndex[bool](bits, rows)
@@ -49,6 +52,7 @@ func nullIndexString(bits []uint64, rows sparse.Array) {
 }
 
 func nullIndexSlice(bits []uint64, rows sparse.Array) {
+	fmt.Println("null_purego::nullIndexSlice")
 	for i := 0; i < rows.Len(); i++ {
 		p := *(**struct{})(rows.Index(i))
 		b := uint64(0)
