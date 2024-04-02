@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"github.com/parquet-go/parquet-go/deprecated"
 	"io"
 	"math"
 	"math/rand"
@@ -509,7 +510,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	if !node.Required() {
 		definitionLevel = 1
 	}
-	fmt.Println("2")
+	fmt.Printf("2 %d\n", definitionLevel)
 
 	minValue := parquet.Value{}
 	maxValue := parquet.Value{}
@@ -519,11 +520,14 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	for i := range values {
 		batch[i] = parquet.ValueOf(values[i]).Level(repetitionLevel, definitionLevel, 0)
+		fmt.Println("3.5")
 	}
+
 	fmt.Println("4")
 
 	for i := range batch {
 		_, err := buffer.WriteRows([]parquet.Row{batch[i : i+1]})
+		fmt.Println("4.5")
 		if err != nil {
 			t.Fatalf("writing value to row group: %v", err)
 		}
@@ -531,12 +535,16 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	fmt.Println("5")
 
 	numRows := buffer.NumRows()
+	fmt.Printf("5.5 %d\n", numRows)
+
 	if numRows != int64(len(batch)) {
 		t.Fatalf("number of rows mismatch: want=%d got=%d", len(batch), numRows)
 	}
 	fmt.Println("6")
 
 	typ := node.Type()
+	fmt.Printf("6.5 %d\n", typ)
+
 	for _, value := range batch {
 
 		t.Logf("value=%v min=%v max=%v", value, minValue, maxValue)
@@ -548,14 +556,23 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 			maxValue = value
 		}
 	}
-	fmt.Println("7")
+
+	fmt.Printf("7 min=%v max=%v\n", minValue, maxValue)
+
+	fmt.Print("minValue")
+	deprecated.PrintBitsWithSpaces(minValue.Bytes())
+	fmt.Print("maxValue")
+	deprecated.PrintBitsWithSpaces(maxValue.Bytes())
 
 	sortFunc(typ, batch)
+
 	sort.Sort(buffer)
+
 	fmt.Println("8")
 
 	page := buffer.ColumnBuffers()[0].Page()
 	numValues := page.NumValues()
+
 	if numValues != int64(len(batch)) {
 		t.Fatalf("number of values mistmatch: want=%d got=%d", len(batch), numValues)
 	}
