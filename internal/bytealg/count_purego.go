@@ -2,8 +2,15 @@
 
 package bytealg
 
-import "bytes"
+import (
+	"bytes"
+	"fmt"
+)
 
 func Count(data []byte, value byte) int {
-	return bytes.Count(data, []byte{value})
+
+	count := bytes.Count(data, []byte{value})
+	fmt.Printf("Count %d\n", count)
+	return count
+	//return bytes.Count(data, []byte{value})
 }

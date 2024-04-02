@@ -1,13 +1,19 @@
 package parquet
 
-import "github.com/parquet-go/parquet-go/internal/bytealg"
+import (
+	"fmt"
+	"github.com/parquet-go/parquet-go/internal/bytealg"
+)
 
 func countLevelsEqual(levels []byte, value byte) int {
 	return bytealg.Count(levels, value)
 }
 
 func countLevelsNotEqual(levels []byte, value byte) int {
-	return len(levels) - countLevelsEqual(levels, value)
+	lne := len(levels) - countLevelsEqual(levels, value)
+	fmt.Printf("countLevelsNotEqual: %d %d\n", lne, value)
+	return lne
+	//return len(levels) - countLevelsEqual(levels, value)
 }
 
 func appendLevel(levels []byte, value byte, count int) []byte {

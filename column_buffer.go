@@ -220,6 +220,7 @@ func (col *optionalColumnBuffer) Page() Page {
 	// This case is also important because the cyclic sorting modifies the
 	// buffer which makes it unsafe to read the buffer concurrently.
 	if col.reordered {
+
 		numNulls := countLevelsNotEqual(col.definitionLevels, col.maxDefinitionLevel)
 		numValues := len(col.rows) - numNulls
 
