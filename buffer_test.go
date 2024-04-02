@@ -510,6 +510,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	minValue := parquet.Value{}
 	maxValue := parquet.Value{}
+
 	batch := make([]parquet.Value, len(values))
 	for i := range values {
 		batch[i] = parquet.ValueOf(values[i]).Level(repetitionLevel, definitionLevel, 0)
@@ -529,6 +530,9 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	typ := node.Type()
 	for _, value := range batch {
+
+		t.Logf("value=%v min=%v max=%v", value, minValue, maxValue)
+
 		if minValue.IsNull() || typ.Compare(value, minValue) < 0 {
 			minValue = value
 		}
