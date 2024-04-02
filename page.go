@@ -540,7 +540,12 @@ func (page *booleanPage) valueAt(i int) bool {
 	b := ((page.bits[j] >> k) & 1) != 0
 
 	fmt.Printf("page.go booleanPage.valueAt(%d, %d ,%t)\n", i, j, b)
-	deprecated.PrintBitsWithSpaces(page.bits[j:1])
+
+	ba := make([]byte, 0, 1)
+
+	ba[0] = page.bits[j]
+
+	deprecated.PrintBitsWithSpaces(ba)
 
 	return b
 	//	return ((page.bits[j] >> k) & 1) != 0
