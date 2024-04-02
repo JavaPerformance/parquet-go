@@ -558,11 +558,13 @@ func (page *booleanPage) max() bool {
 }
 
 func (page *booleanPage) bounds() (min, max bool) {
-	fmt.Println("booleanPage Bounds is", page.min(), page.max())
 	hasFalse, hasTrue := false, false
+
+	fmt.Println("booleanPage Bounds() numValues:", page.numValues)
 
 	for i := 0; i < int(page.numValues); i++ {
 		v := page.valueAt(i)
+		fmt.Printf("booleanPage Bounds() valueAt(%d): %t\n", i, v)
 		if v {
 			hasTrue = true
 		} else {
