@@ -539,7 +539,7 @@ func (page *booleanPage) valueAt(i int) bool {
 
 	b := ((page.bits[j] >> k) & 1) != 0
 
-	fmt.Printf("page.go booleanPage.valueAt(%d, %d ,%t)\n", i, j, b)
+	fmt.Printf("page.go booleanPage.valueAt(raw=%d i=%d, j=%d k=%d ,bool=%t)\n", uint32(int(page.offset)+i), i, j, k, b)
 
 	l := int(j)
 
