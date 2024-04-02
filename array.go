@@ -38,7 +38,7 @@ func makeSlice[T any](a sparse.Array) []T {
 }
 
 func slice[T any](p unsafe.Pointer, n int) []T {
-	fmt.Println("array.go slice\n")
+	fmt.Println("array.go slice")
 	return unsafe.Slice((*T)(p), n)
 }
 
