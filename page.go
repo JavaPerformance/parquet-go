@@ -636,6 +636,9 @@ func (page *booleanPage) Bounds() (min, max Value, ok bool) {
 
 func (page *booleanPage) Slice(i, j int64) Page {
 	fmt.Println("page.go booleanPage.Slice")
+
+	deprecated.PrintBitsWithSpaces(page.bits)
+
 	lowWithOffset := i + int64(page.offset)
 	highWithOffset := j + int64(page.offset)
 
