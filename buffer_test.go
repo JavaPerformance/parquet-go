@@ -559,9 +559,9 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	fmt.Printf("7 min=%v max=%v\n", minValue, maxValue)
 
-	fmt.Print("minValue")
+	fmt.Print("minValue ")
 	deprecated.PrintBitsWithSpaces(minValue.Bytes())
-	fmt.Print("maxValue")
+	fmt.Print("maxValue ")
 	deprecated.PrintBitsWithSpaces(maxValue.Bytes())
 
 	sortFunc(typ, batch)
@@ -589,6 +589,15 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 		t.Fatal("page bounds are missing")
 	}
 	fmt.Println("11")
+
+	fmt.Print("minV ")
+	deprecated.PrintBitsWithSpaces(min.Bytes())
+	fmt.Print("minValue ")
+	deprecated.PrintBitsWithSpaces(minValue.Bytes())
+	fmt.Print("max ")
+	deprecated.PrintBitsWithSpaces(max.Bytes())
+	fmt.Print("maxValue ")
+	deprecated.PrintBitsWithSpaces(maxValue.Bytes())
 
 	if !parquet.Equal(min, minValue) {
 		t.Fatalf("min value mismatch: want=%v got=%v", minValue, min)
