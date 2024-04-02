@@ -10,6 +10,7 @@
 package unsafecast
 
 import (
+	"fmt"
 	"reflect"
 	"unsafe"
 )
@@ -69,6 +70,7 @@ type slice struct {
 // corruption if the layouts mismatch (e.g. the pointers in the From are different
 // than the pointers in To).
 func Slice[To, From any](data []From) []To {
+	fmt.Println("unsafecast.go Slice")
 	// This function could use unsafe.Slice but it would drop the capacity
 	// information, so instead we implement the type conversion.
 	var zf From
