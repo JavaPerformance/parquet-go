@@ -536,7 +536,14 @@ func (page *booleanPage) Values() ValueReader { return &booleanPageValues{page: 
 func (page *booleanPage) valueAt(i int) bool {
 	j := uint32(int(page.offset)+i) / 8
 	k := uint32(int(page.offset)+i) % 8
-	return ((page.bits[j] >> k) & 1) != 0
+
+	b := ((page.bits[j] >> k) & 1) != 0
+
+	fmt.Printf("page.go booleanPage.valueAt(%d, %d ,%t)\n", i, j, b)
+	deprecated.PrintBitsWithSpaces(page.bits[j:1])
+
+	return b
+	//	return ((page.bits[j] >> k) & 1) != 0
 }
 
 func (page *booleanPage) min() bool {
