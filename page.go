@@ -503,12 +503,27 @@ type booleanPage struct {
 }
 
 func newBooleanPage(typ Type, columnIndex int16, numValues int32, values encoding.Values) *booleanPage {
-	return &booleanPage{
+	/*
+		return &booleanPage{
+			typ:         typ,
+			bits:        values.Boolean()[:bitpack.ByteCount(uint(numValues))],
+			numValues:   numValues,
+			columnIndex: ^columnIndex,
+		}
+	*/
+
+	bp := &booleanPage{
 		typ:         typ,
 		bits:        values.Boolean()[:bitpack.ByteCount(uint(numValues))],
 		numValues:   numValues,
 		columnIndex: ^columnIndex,
 	}
+
+	fmt.Print("newBooleanPage  ")
+	deprecated.PrintBitsWithSpaces(bp.bits)
+
+	return bp
+
 }
 
 func (page *booleanPage) Type() Type { return page.typ }
