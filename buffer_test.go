@@ -502,19 +502,25 @@ func descending(typ parquet.Type, values []parquet.Value) {
 }
 
 func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encoding encoding.Encoding, values []interface{}, sortFunc sortFunc) {
+
+	fmt.Println("1")
 	repetitionLevel := 0
 	definitionLevel := 0
 	if !node.Required() {
 		definitionLevel = 1
 	}
+	fmt.Println("2")
 
 	minValue := parquet.Value{}
 	maxValue := parquet.Value{}
 
 	batch := make([]parquet.Value, len(values))
+	fmt.Println("3")
+
 	for i := range values {
 		batch[i] = parquet.ValueOf(values[i]).Level(repetitionLevel, definitionLevel, 0)
 	}
+	fmt.Println("4")
 
 	for i := range batch {
 		_, err := buffer.WriteRows([]parquet.Row{batch[i : i+1]})
@@ -522,11 +528,13 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 			t.Fatalf("writing value to row group: %v", err)
 		}
 	}
+	fmt.Println("5")
 
 	numRows := buffer.NumRows()
 	if numRows != int64(len(batch)) {
 		t.Fatalf("number of rows mismatch: want=%d got=%d", len(batch), numRows)
 	}
+	fmt.Println("6")
 
 	typ := node.Type()
 	for _, value := range batch {
@@ -540,36 +548,46 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 			maxValue = value
 		}
 	}
+	fmt.Println("7")
 
 	sortFunc(typ, batch)
 	sort.Sort(buffer)
+	fmt.Println("8")
 
 	page := buffer.ColumnBuffers()[0].Page()
 	numValues := page.NumValues()
 	if numValues != int64(len(batch)) {
 		t.Fatalf("number of values mistmatch: want=%d got=%d", len(batch), numValues)
 	}
+	fmt.Println("9")
 
 	numNulls := page.NumNulls()
 	if numNulls != 0 {
 		t.Fatalf("number of nulls mismatch: want=0 got=%d", numNulls)
 	}
+	fmt.Println("10")
 
 	min, max, hasBounds := page.Bounds()
 	if !hasBounds && numRows > 0 {
 		t.Fatal("page bounds are missing")
 	}
+	fmt.Println("11")
+
 	if !parquet.Equal(min, minValue) {
 		t.Fatalf("min value mismatch: want=%v got=%v", minValue, min)
 	}
+	fmt.Println("12")
+
 	if !parquet.Equal(max, maxValue) {
 		t.Fatalf("max value mismatch: want=%v got=%v", maxValue, max)
 	}
+	fmt.Println("13")
 
 	// We write a single value per row, so num values = num rows for all pages
 	// including repeated ones, which makes it OK to slice the pages using the
 	// number of values as a proxy for the row indexes.
 	halfValues := numValues / 2
+	fmt.Println("14")
 
 	for _, test := range [...]struct {
 		scenario string
@@ -582,6 +600,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	} {
 		v := [1]parquet.Value{}
 		i := 0
+		fmt.Println("15")
 
 		for {
 			n, err := test.reader.ReadValues(v[:])
@@ -603,11 +622,15 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 				t.Fatalf("reading value from %q reader: %v", test.scenario, err)
 			}
 		}
+		fmt.Println("16")
 
 		if i != len(test.values) {
 			t.Errorf("wrong number of values read from %q reader: want=%d got=%d", test.scenario, len(test.values), i)
 		}
 	}
+
+	fmt.Println("17")
+
 }
 
 func TestBufferGenerateBloomFilters(t *testing.T) {
