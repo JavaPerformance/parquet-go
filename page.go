@@ -541,12 +541,19 @@ func (page *booleanPage) valueAt(i int) bool {
 
 	fmt.Printf("page.go booleanPage.valueAt(%d, %d ,%t)\n", i, j, b)
 
-	ba := make([]byte, 0, 1)
+	l := int(j)
 
-	ba[0] = page.bits[j]
+	// Check for potential out-of-bounds access
+	if l < len(page.bits) {
+		// Pre-allocate some capacity if expecting more data
+		ba := make([]byte, 0, 1) // Adjust the capacity as needed
 
-	deprecated.PrintBitsWithSpaces(ba)
-
+		ba = append(ba, page.bits[l])
+		deprecated.PrintBitsWithSpaces(ba)
+	} else {
+		// Handle the case where 'l' is out of bounds (optional)
+		fmt.Println("Index out of bounds")
+	}
 	return b
 	//	return ((page.bits[j] >> k) & 1) != 0
 }
