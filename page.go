@@ -549,6 +549,7 @@ func (page *booleanPage) Data() encoding.Values { return encoding.BooleanValues(
 func (page *booleanPage) Values() ValueReader { return &booleanPageValues{page: page} }
 
 func (page *booleanPage) valueAt(i int) bool {
+
 	j := uint32(int(page.offset)+i) / 8
 	k := uint32(int(page.offset)+i) % 8
 

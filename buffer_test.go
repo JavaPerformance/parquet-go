@@ -571,6 +571,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	fmt.Println("8")
 
 	page := buffer.ColumnBuffers()[0].Page()
+
 	numValues := page.NumValues()
 
 	if numValues != int64(len(batch)) {

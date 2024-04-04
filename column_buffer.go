@@ -806,6 +806,7 @@ func (col *booleanColumnBuffer) valueAt(i int) bool {
 }
 
 func (col *booleanColumnBuffer) setValueAt(i int, v bool) {
+	fmt.Println("column_buffer.go setValueAt")
 	// `offset` is always zero in the page of a column buffer
 	j := uint32(i) / 8
 	k := uint32(i) % 8
@@ -835,6 +836,8 @@ func (col *booleanColumnBuffer) WriteValues(values []Value) (int, error) {
 }
 
 func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
+	fmt.Println("column_buffer.go writeValues")
+
 	numBytes := bitpack.ByteCount(uint(col.numValues) + uint(rows.Len()))
 	if cap(col.bits) < numBytes {
 		col.bits = append(make([]byte, 0, max(numBytes, 2*cap(col.bits))), col.bits...)
@@ -2059,6 +2062,7 @@ func writeRowsFuncOfRequired(t reflect.Type, schema *Schema, path columnPath) wr
 }
 
 func writeRowsFuncOfOptional(t reflect.Type, schema *Schema, path columnPath, writeRows writeRowsFunc) writeRowsFunc {
+	fmt.Println("column_buffer.go writeRowsFuncOfOptional")
 	nullIndex := nullIndexFuncOf(t)
 	return func(columns []ColumnBuffer, rows sparse.Array, levels columnLevels) error {
 		if rows.Len() == 0 {
