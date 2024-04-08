@@ -1,6 +1,7 @@
 package parquet
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 	"runtime"
@@ -375,6 +376,7 @@ func (buf *Buffer) Write(row interface{}) error {
 
 // WriteRows writes parquet rows to the buffer.
 func (buf *Buffer) WriteRows(rows []Row) (int, error) {
+	fmt.Println("buffer.go WriteRows")
 	defer func() {
 		for i, colbuf := range buf.colbuf {
 			clearValues(colbuf)

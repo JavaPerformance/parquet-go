@@ -899,6 +899,7 @@ var (
 )
 
 func clearValues(values []Value) {
+	fmt.Println("buffer.go clearValues")
 	for i := range values {
 		values[i] = Value{}
 	}
