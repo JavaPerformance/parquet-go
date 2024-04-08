@@ -833,6 +833,9 @@ func (col *booleanColumnBuffer) WriteBooleans(values []bool) (int, error) {
 func (col *booleanColumnBuffer) WriteValues(values []Value) (int, error) {
 	fmt.Println("column_buffer.go WriteValues1")
 	var model Value
+
+	fmt.Printf("unsafe.Offsetof(model.u64)) %d", unsafe.Offsetof(model.u64))
+
 	col.writeValues(makeArrayValue(values, unsafe.Offsetof(model.u64)), columnLevels{})
 	return len(values), nil
 }
