@@ -825,18 +825,20 @@ func (col *booleanColumnBuffer) Swap(i, j int) {
 }
 
 func (col *booleanColumnBuffer) WriteBooleans(values []bool) (int, error) {
+	fmt.Println("column_buffer.go WriteBooleans")
 	col.writeValues(sparse.MakeBoolArray(values).UnsafeArray(), columnLevels{})
 	return len(values), nil
 }
 
 func (col *booleanColumnBuffer) WriteValues(values []Value) (int, error) {
+	fmt.Println("column_buffer.go WriteValues1")
 	var model Value
 	col.writeValues(makeArrayValue(values, unsafe.Offsetof(model.u64)), columnLevels{})
 	return len(values), nil
 }
 
 func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
-	fmt.Println("column_buffer.go writeValues")
+	fmt.Println("column_buffer.go writeValues2 ")
 
 	numBytes := bitpack.ByteCount(uint(col.numValues) + uint(rows.Len()))
 	fmt.Printf("numBytes: %d\n", numBytes)

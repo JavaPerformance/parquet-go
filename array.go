@@ -9,6 +9,7 @@ import (
 )
 
 func makeArrayValue(values []Value, offset uintptr) sparse.Array {
+	fmt.Println("array.go makeArrayValue")
 	ptr := *(*unsafe.Pointer)(unsafe.Pointer(&values))
 	return sparse.UnsafeArray(unsafe.Add(ptr, offset), len(values), unsafe.Sizeof(Value{}))
 }
