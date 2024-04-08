@@ -45,6 +45,7 @@ func makeArray(base unsafe.Pointer, length, offset uintptr) array {
 }
 
 func (a array) index(i int) unsafe.Pointer {
+	fmt.Println("array.go index", i)
 	if uintptr(i) >= a.len {
 		panic("index out of bounds")
 	}
@@ -52,6 +53,7 @@ func (a array) index(i int) unsafe.Pointer {
 }
 
 func (a array) slice(i, j int) array {
+	fmt.Println("array.go slice")
 	if uintptr(i) > a.len || uintptr(j) > a.len || i > j {
 		panic("slice index out of bounds")
 	}
@@ -63,6 +65,7 @@ func (a array) slice(i, j int) array {
 }
 
 func (a array) offset(off uintptr) array {
+	fmt.Println("array.go offset")
 	if a.ptr == nil {
 		panic("offset of nil array")
 	}
@@ -95,10 +98,13 @@ func (a BoolArray) UnsafeArray() Array { return Array{a.array} }
 type Int8Array struct{ array }
 
 func MakeInt8Array(values []int8) Int8Array {
+	fmt.Println("array.go MakeInt8Array")
+
 	return Int8Array{makeArray(*(*unsafe.Pointer)(unsafe.Pointer(&values)), uintptr(len(values)), 8)}
 }
 
 func UnsafeInt8Array(base unsafe.Pointer, length int, offset uintptr) Int8Array {
+	fmt.Println("array.go UnsafeInt8Array")
 	return Int8Array{makeArray(base, uintptr(length), offset)}
 }
 

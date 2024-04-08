@@ -2,7 +2,10 @@
 
 package sparse
 
+import "fmt"
+
 func gatherBits(dst []byte, src Uint8Array) int {
+	fmt.Println("gather_purego.go gatherBits")
 	n := min(len(dst)*8, src.Len())
 	i := 0
 

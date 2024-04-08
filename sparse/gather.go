@@ -1,24 +1,34 @@
 package sparse
 
-import "unsafe"
+import (
+	"fmt"
+	"unsafe"
+)
 
 func GatherInt32(dst []int32, src Int32Array) int {
+	fmt.Println("gather.go GatherInt32")
 	return GatherUint32(*(*[]uint32)(unsafe.Pointer(&dst)), src.Uint32Array())
 }
 
 func GatherInt64(dst []int64, src Int64Array) int {
+	fmt.Println("gather.go GatherInt64")
 	return GatherUint64(*(*[]uint64)(unsafe.Pointer(&dst)), src.Uint64Array())
 }
 
 func GatherFloat32(dst []float32, src Float32Array) int {
+	fmt.Println("gather.go GatherFloat32")
 	return GatherUint32(*(*[]uint32)(unsafe.Pointer(&dst)), src.Uint32Array())
 }
 
 func GatherFloat64(dst []float64, src Float64Array) int {
+	fmt.Println("gather.go GatherFloat64")
 	return GatherUint64(*(*[]uint64)(unsafe.Pointer(&dst)), src.Uint64Array())
 }
 
-func GatherBits(dst []byte, src Uint8Array) int { return gatherBits(dst, src) }
+func GatherBits(dst []byte, src Uint8Array) int {
+	fmt.Println("gather.go GatherFloat64")
+	return gatherBits(dst, src)
+}
 
 func GatherUint32(dst []uint32, src Uint32Array) int { return gather32(dst, src) }
 
