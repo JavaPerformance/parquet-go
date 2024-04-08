@@ -839,15 +839,30 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 	fmt.Println("column_buffer.go writeValues")
 
 	numBytes := bitpack.ByteCount(uint(col.numValues) + uint(rows.Len()))
+	fmt.Printf("numBytes: %d", numBytes)
+
 	if cap(col.bits) < numBytes {
+		fmt.Printf("col.bits %d < numBytes %d", col.bits, numBytes)
 		col.bits = append(make([]byte, 0, max(numBytes, 2*cap(col.bits))), col.bits...)
 	}
 	col.bits = col.bits[:numBytes]
 	i := 0
 	r := 8 - (int(col.numValues) % 8)
+
 	bytes := rows.Uint8Array()
 
+	bb := make([]byte, bytes.Len())
+
+	for g := 0; g < bytes.Len(); g++ {
+
+		bb[g] = bytes.Index(g)
+
+	}
+
+	deprecated.PrintBitsWithSpaces(bb)
+
 	if r <= bytes.Len() {
+
 		// First we attempt to write enough bits to align the number of values
 		// in the column buffer on 8 bytes. After this step the next bit should
 		// be written at the zero'th index of a byte of the buffer.
@@ -885,7 +900,14 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 		i++
 	}
 
+	fmt.Println("Just Before bitpack")
+	deprecated.PrintBitsWithSpaces(col.bits)
+
 	col.bits = col.bits[:bitpack.ByteCount(uint(col.numValues))]
+
+	fmt.Println("After bitpack")
+	deprecated.PrintBitsWithSpaces(col.bits)
+
 }
 
 func (col *booleanColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
