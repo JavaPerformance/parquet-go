@@ -839,10 +839,10 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 	fmt.Println("column_buffer.go writeValues")
 
 	numBytes := bitpack.ByteCount(uint(col.numValues) + uint(rows.Len()))
-	fmt.Printf("numBytes: %d", numBytes)
+	fmt.Printf("numBytes: %d\n", numBytes)
 
 	if cap(col.bits) < numBytes {
-		fmt.Printf("col.bits %d < numBytes %d", col.bits, numBytes)
+		fmt.Printf("col.bits %d < numBytes %d\n", col.bits, numBytes)
 		col.bits = append(make([]byte, 0, max(numBytes, 2*cap(col.bits))), col.bits...)
 	}
 	col.bits = col.bits[:numBytes]
