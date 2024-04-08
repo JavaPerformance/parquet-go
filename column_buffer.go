@@ -849,6 +849,8 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 	i := 0
 	r := 8 - (int(col.numValues) % 8)
 
+	fmt.Printf("i %d, r %d\n", i, r)
+
 	bytes := rows.Uint8Array()
 
 	bb := make([]byte, bytes.Len())

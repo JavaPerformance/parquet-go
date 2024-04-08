@@ -1,6 +1,7 @@
 package sparse
 
 import (
+	"fmt"
 	"time"
 	"unsafe"
 )
@@ -22,7 +23,10 @@ func (a Array) Int32Array() Int32Array     { return Int32Array{a.array} }
 func (a Array) Int64Array() Int64Array     { return Int64Array{a.array} }
 func (a Array) Float32Array() Float32Array { return Float32Array{a.array} }
 func (a Array) Float64Array() Float64Array { return Float64Array{a.array} }
-func (a Array) Uint8Array() Uint8Array     { return Uint8Array{a.array} }
+func (a Array) Uint8Array() Uint8Array {
+	fmt.Println("array.go Uint8Array")
+	return Uint8Array{a.array}
+}
 func (a Array) Uint16Array() Uint16Array   { return Uint16Array{a.array} }
 func (a Array) Uint32Array() Uint32Array   { return Uint32Array{a.array} }
 func (a Array) Uint64Array() Uint64Array   { return Uint64Array{a.array} }
@@ -82,8 +86,11 @@ func UnsafeBoolArray(base unsafe.Pointer, length int, offset uintptr) BoolArray 
 func (a BoolArray) Len() int                 { return int(a.len) }
 func (a BoolArray) Index(i int) bool         { return *(*byte)(a.index(i)) != 0 }
 func (a BoolArray) Slice(i, j int) BoolArray { return BoolArray{a.slice(i, j)} }
-func (a BoolArray) Uint8Array() Uint8Array   { return Uint8Array{a.array} }
-func (a BoolArray) UnsafeArray() Array       { return Array{a.array} }
+func (a BoolArray) Uint8Array() Uint8Array {
+
+	return Uint8Array{a.array}
+}
+func (a BoolArray) UnsafeArray() Array { return Array{a.array} }
 
 type Int8Array struct{ array }
 
@@ -197,10 +204,12 @@ func (a Float64Array) UnsafeArray() Array          { return Array{a.array} }
 type Uint8Array struct{ array }
 
 func MakeUint8Array(values []uint8) Uint8Array {
+	fmt.Println("array.go MakeUint8Array")
 	return Uint8Array{makeArray(*(*unsafe.Pointer)(unsafe.Pointer(&values)), uintptr(len(values)), 8)}
 }
 
 func UnsafeUint8Array(base unsafe.Pointer, length int, offset uintptr) Uint8Array {
+	fmt.Println("array.go UnsafeUint8Array")
 	return Uint8Array{makeArray(base, uintptr(length), offset)}
 }
 
