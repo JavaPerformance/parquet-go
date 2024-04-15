@@ -555,6 +555,8 @@ func (page *booleanPage) valueAt(i int) bool {
 
 	b := ((page.bits[j] >> k) & 1) != 0
 
+	deprecated.PrintBitsWithSpaces(page.bits)
+
 	fmt.Printf("page.go booleanPage.valueAt(len=%d raw=%d i=%d, j=%d k=%d ,bool=%t)\n", len(page.bits), uint32(int(page.offset)+i), i, j, k, b)
 
 	l := int(j)
