@@ -616,8 +616,10 @@ func (page *booleanPage) bounds() (min, max bool) {
 }
 
 func (page *booleanPage) Bounds() (min, max Value, ok bool) {
-	fmt.Println("page.go booleanPage Bounds:")
+	fmt.Printf("page.go booleanPage Bounds: %t\n", ok)
+	fmt.Printf("Min before\n")
 	deprecated.PrintBitsWithSpaces(min.Bytes())
+	fmt.Printf("Max before\n")
 	deprecated.PrintBitsWithSpaces(max.Bytes())
 
 	if ok = page.numValues > 0; ok {
@@ -627,7 +629,9 @@ func (page *booleanPage) Bounds() (min, max Value, ok bool) {
 		min = page.makeValue(minBool)
 		max = page.makeValue(maxBool)
 
+		fmt.Printf("Min after\n")
 		deprecated.PrintBitsWithSpaces(min.Bytes())
+		fmt.Printf("Max after\n")
 		deprecated.PrintBitsWithSpaces(max.Bytes())
 
 	}
