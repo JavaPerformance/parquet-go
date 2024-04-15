@@ -586,6 +586,9 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	fmt.Println("10")
 
 	min, max, hasBounds := page.Bounds()
+
+	fmt.Println("10.5")
+
 	if !hasBounds && numRows > 0 {
 		t.Fatal("page bounds are missing")
 	}

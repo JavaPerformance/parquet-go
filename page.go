@@ -550,6 +550,10 @@ func (page *booleanPage) Values() ValueReader { return &booleanPageValues{page: 
 
 func (page *booleanPage) valueAt(i int) bool {
 
+	fmt.Printf("page.go booleanPage.valueAt(%d)\n", i)
+
+	fmt.Printf("page.go booleanPage page.offset: %d\n", page.offset)
+
 	j := uint32(int(page.offset)+i) / 8
 	k := uint32(int(page.offset)+i) % 8
 
@@ -597,11 +601,12 @@ func (page *booleanPage) max() bool {
 func (page *booleanPage) bounds() (min, max bool) {
 	hasFalse, hasTrue := false, false
 
-	fmt.Println("booleanPage Bounds() numValues:", page.numValues)
+	fmt.Println("booleanPage bounds() numValues:", page.numValues)
 
 	for i := 0; i < int(page.numValues); i++ {
+
 		v := page.valueAt(i)
-		fmt.Printf("booleanPage Bounds() valueAt(%d): %t\n", i, v)
+		fmt.Printf("booleanPage bounds() valueAt(%d): %t\n", i, v)
 		if v {
 			hasTrue = true
 		} else {
