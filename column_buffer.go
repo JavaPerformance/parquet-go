@@ -862,19 +862,18 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 	fmt.Printf("writeValues: i %d, r %d\n", i, r)
 
 	bytes := rows.Uint8Array()
-	/*
-		bb := make([]byte, bytes.Len())
 
-		for g := 0; g < bytes.Len(); g++ {
+	bb := make([]byte, bytes.Len())
 
-			bb[g] = bytes.Index(g)
+	for g := 0; g < bytes.Len(); g++ {
 
-		}
+		bb[g] = bytes.Index(g)
 
-		fmt.Print("writeValues: ")
+	}
 
-		deprecated.PrintBitsWithSpaces(bb)
-	*/
+	fmt.Print("writeValues: rows.Uint8Array(): ")
+
+	deprecated.PrintBitsWithSpaces(bb)
 
 	if r <= bytes.Len() {
 

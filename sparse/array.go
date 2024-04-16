@@ -25,7 +25,7 @@ func (a Array) Int64Array() Int64Array     { return Int64Array{a.array} }
 func (a Array) Float32Array() Float32Array { return Float32Array{a.array} }
 func (a Array) Float64Array() Float64Array { return Float64Array{a.array} }
 func (a Array) Uint8Array() Uint8Array {
-	//	fmt.Println("array.go Uint8Array")
+	fmt.Println("array.go Uint8Array")
 	return Uint8Array{a.array}
 }
 func (a Array) Uint16Array() Uint16Array   { return Uint16Array{a.array} }
@@ -81,10 +81,12 @@ func (a array) offset(off uintptr) array {
 type BoolArray struct{ array }
 
 func MakeBoolArray(values []bool) BoolArray {
+	fmt.Println("array.go MakeBoolArray")
 	return BoolArray{makeArray(*(*unsafe.Pointer)(unsafe.Pointer(&values)), uintptr(len(values)), 1)}
 }
 
 func UnsafeBoolArray(base unsafe.Pointer, length int, offset uintptr) BoolArray {
+	fmt.Println("array.go UnsafeBoolArray")
 	return BoolArray{makeArray(base, uintptr(length), offset)}
 }
 
@@ -92,7 +94,7 @@ func (a BoolArray) Len() int                 { return int(a.len) }
 func (a BoolArray) Index(i int) bool         { return *(*byte)(a.index(i)) != 0 }
 func (a BoolArray) Slice(i, j int) BoolArray { return BoolArray{a.slice(i, j)} }
 func (a BoolArray) Uint8Array() Uint8Array {
-
+	fmt.Println("array.go Uint8Array BoolArray")
 	return Uint8Array{a.array}
 }
 func (a BoolArray) UnsafeArray() Array { return Array{a.array} }
@@ -221,8 +223,12 @@ func UnsafeUint8Array(base unsafe.Pointer, length int, offset uintptr) Uint8Arra
 	return Uint8Array{makeArray(base, uintptr(length), offset)}
 }
 
-func (a Uint8Array) Len() int                  { return int(a.len) }
-func (a Uint8Array) Index(i int) uint8         { return *(*uint8)(a.index(i)) }
+func (a Uint8Array) Len() int { return int(a.len) }
+func (a Uint8Array) Index(i int) uint8 {
+
+	return *(*uint8)(a.index(i))
+
+}
 func (a Uint8Array) Slice(i, j int) Uint8Array { return Uint8Array{a.slice(i, j)} }
 func (a Uint8Array) UnsafeArray() Array        { return Array{a.array} }
 
