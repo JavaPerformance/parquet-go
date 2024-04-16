@@ -841,34 +841,40 @@ func (col *booleanColumnBuffer) WriteValues(values []Value) (int, error) {
 }
 
 func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
-	fmt.Println("column_buffer.go writeValues2 ")
+	fmt.Printf("column_buffer.go writeValues2, col.numValues: %d\n", col.numValues)
 
 	numBytes := bitpack.ByteCount(uint(col.numValues) + uint(rows.Len()))
-	fmt.Printf("writeValues: numBytes: %d\n", numBytes)
+
+	fmt.Printf("writeValues: bitpack.ByteCount(%d + %d) = %d\n", uint(col.numValues), uint(rows.Len()), numBytes)
 
 	if cap(col.bits) < numBytes {
-		fmt.Printf("writeValues: col.bits %d < numBytes %d\n", col.bits, numBytes)
+		fmt.Printf("writeValues: expanding col.bits, cap(col.bits) %d < numBytes %d\n", cap(col.bits), numBytes)
 		col.bits = append(make([]byte, 0, max(numBytes, 2*cap(col.bits))), col.bits...)
 	}
+
+	fmt.Printf("writeValues: reslicing col.bits to [0:%d]\n", numBytes)
+
 	col.bits = col.bits[:numBytes]
+
 	i := 0
 	r := 8 - (int(col.numValues) % 8)
 
 	fmt.Printf("writeValues: i %d, r %d\n", i, r)
 
 	bytes := rows.Uint8Array()
+	/*
+		bb := make([]byte, bytes.Len())
 
-	bb := make([]byte, bytes.Len())
+		for g := 0; g < bytes.Len(); g++ {
 
-	for g := 0; g < bytes.Len(); g++ {
+			bb[g] = bytes.Index(g)
 
-		bb[g] = bytes.Index(g)
+		}
 
-	}
+		fmt.Print("writeValues: ")
 
-	fmt.Print("writeValues: ")
-
-	deprecated.PrintBitsWithSpaces(bb)
+		deprecated.PrintBitsWithSpaces(bb)
+	*/
 
 	if r <= bytes.Len() {
 
@@ -901,10 +907,26 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 	}
 
 	for i < bytes.Len() {
+
 		x := uint(col.numValues) / 8
 		y := uint(col.numValues) % 8
+
+		fmt.Printf("writeValues: col.numValues: %d i: %d, x: %d y: %d\n", col.numValues, i, x, y)
+
 		b := bytes.Index(i)
+
+		fmt.Printf("writeValues: bytes.Index(%d) = %d\n", i, b)
+
+		fmt.Printf("writeValues: col.bits[%d] = %d\n", x, col.bits[x])
+
+		fmt.Printf("((%d & 1) << %d) = %d\n", b, y, ((b & 1) << y))
+
+		fmt.Printf("(col.bits[%d] & ^(1 << %d) = %d\n", x, y, (col.bits[x] & ^(1 << y)))
+
+		fmt.Printf("col.bits[x] = %d\n", ((b&1)<<y)|(col.bits[x] & ^(1<<y)))
+
 		col.bits[x] = ((b & 1) << y) | (col.bits[x] & ^(1 << y))
+
 		col.numValues++
 		i++
 	}
