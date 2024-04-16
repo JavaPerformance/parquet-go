@@ -25,7 +25,8 @@ func (a Array) Int64Array() Int64Array     { return Int64Array{a.array} }
 func (a Array) Float32Array() Float32Array { return Float32Array{a.array} }
 func (a Array) Float64Array() Float64Array { return Float64Array{a.array} }
 func (a Array) Uint8Array() Uint8Array {
-	fmt.Println("array.go Uint8Array")
+	fmt.Printf("array.go Uint8Array: ptr: %d len: %doff: %d\n", a.ptr, a.len, a.off)
+
 	return Uint8Array{a.array}
 }
 func (a Array) Uint16Array() Uint16Array   { return Uint16Array{a.array} }
