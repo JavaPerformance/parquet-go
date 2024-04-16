@@ -864,6 +864,8 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 
 	fmt.Printf("writeValues: i %d, r %d\n", i, r)
 
+	fmt.Printf("rows.Index(i)")
+
 	bytes := rows.Uint8Array()
 
 	bb := make([]byte, bytes.Len())
@@ -886,7 +888,11 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 		if r < 8 {
 			var b byte
 			for i < r {
+
+				fmt.Printf("rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i), i, bytes.Index(i))
+
 				v := bytes.Index(i)
+
 				b |= (v & 1) << uint(i)
 				i++
 			}
