@@ -844,17 +844,17 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 	fmt.Println("column_buffer.go writeValues2 ")
 
 	numBytes := bitpack.ByteCount(uint(col.numValues) + uint(rows.Len()))
-	fmt.Printf("numBytes: %d\n", numBytes)
+	fmt.Printf("writeValues: numBytes: %d\n", numBytes)
 
 	if cap(col.bits) < numBytes {
-		fmt.Printf("col.bits %d < numBytes %d\n", col.bits, numBytes)
+		fmt.Printf("writeValues: col.bits %d < numBytes %d\n", col.bits, numBytes)
 		col.bits = append(make([]byte, 0, max(numBytes, 2*cap(col.bits))), col.bits...)
 	}
 	col.bits = col.bits[:numBytes]
 	i := 0
 	r := 8 - (int(col.numValues) % 8)
 
-	fmt.Printf("i %d, r %d\n", i, r)
+	fmt.Printf("writeValues: i %d, r %d\n", i, r)
 
 	bytes := rows.Uint8Array()
 
@@ -865,6 +865,8 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 		bb[g] = bytes.Index(g)
 
 	}
+
+	fmt.Print("writeValues: ")
 
 	deprecated.PrintBitsWithSpaces(bb)
 
@@ -907,12 +909,12 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 		i++
 	}
 
-	fmt.Println("Just Before bitpack")
+	fmt.Println("writeValues: Just Before bitpack")
 	deprecated.PrintBitsWithSpaces(col.bits)
 
 	col.bits = col.bits[:bitpack.ByteCount(uint(col.numValues))]
 
-	fmt.Println("After bitpack")
+	fmt.Println("writeValues: After bitpack")
 	deprecated.PrintBitsWithSpaces(col.bits)
 
 }
