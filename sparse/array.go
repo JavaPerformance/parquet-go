@@ -9,7 +9,7 @@ import (
 type Array struct{ array }
 
 func UnsafeArray(base unsafe.Pointer, length int, offset uintptr) Array {
-	//	fmt.Println("sparce.array.go UnsafeArray")
+	fmt.Printf("sparce.array.go UnsafeArray base %d len %d off %d\n", base, length, offset)
 	return Array{makeArray(base, uintptr(length), offset)}
 }
 
@@ -43,7 +43,7 @@ type array struct {
 }
 
 func makeArray(base unsafe.Pointer, length, offset uintptr) array {
-	//	fmt.Println("sparce.array.go makeArray")
+	//fmt.Println("spase.array.go makeArray")
 	return array{ptr: base, len: length, off: offset}
 }
 

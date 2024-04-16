@@ -834,9 +834,12 @@ func (col *booleanColumnBuffer) WriteValues(values []Value) (int, error) {
 	fmt.Println("column_buffer.go WriteValues1")
 	var model Value
 
-	fmt.Printf("unsafe.Offsetof(model.u64)) %d", unsafe.Offsetof(model.u64))
+	fmt.Printf("unsafe.Offsetof(model.u64)) %d\n", unsafe.Offsetof(model.u64))
 
-	col.writeValues(makeArrayValue(values, unsafe.Offsetof(model.u64)), columnLevels{})
+	xxx := makeArrayValue(values, unsafe.Offsetof(model.u64))
+
+	col.writeValues(xxx, columnLevels{})
+	//	col.writeValues(makeArrayValue(values, unsafe.Offsetof(model.u64)), columnLevels{})
 	return len(values), nil
 }
 
