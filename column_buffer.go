@@ -921,7 +921,7 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 
 		fmt.Printf("writeValues: col.numValues: %d i: %d, x: %d y: %d\n", col.numValues, i, x, y)
 
-		fmt.Printf("rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i), i, bytes.Index(i))
+		fmt.Printf("rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i+1), i, bytes.Index(i))
 
 		b := bytes.Index(i)
 
