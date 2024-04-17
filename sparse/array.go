@@ -234,6 +234,7 @@ func UnsafeUint8Array(base unsafe.Pointer, length int, offset uintptr) Uint8Arra
 }
 
 func (a Uint8Array) Len() int { return int(a.len) }
+
 func (a Uint8Array) Index(i int) uint8 {
 	fmt.Println("array.go Index Uint8Array")
 	return *(*uint8)(unsafe.Add(a.index(i), 7))
@@ -253,8 +254,11 @@ func UnsafeUint16Array(base unsafe.Pointer, length int, offset uintptr) Uint16Ar
 	return Uint16Array{makeArray(base, uintptr(length), offset)}
 }
 
-func (a Uint16Array) Len() int                   { return int(a.len) }
-func (a Uint16Array) Index(i int) uint16         { return *(*uint16)(a.index(i)) }
+func (a Uint16Array) Len() int { return int(a.len) }
+func (a Uint16Array) Index(i int) uint16 {
+	return *(*uint16)(unsafe.Add(a.index(i), 6))
+	//	return *(*uint16)(a.index(i))
+}
 func (a Uint16Array) Slice(i, j int) Uint16Array { return Uint16Array{a.slice(i, j)} }
 func (a Uint16Array) Uint8Array() Uint8Array     { return Uint8Array{a.array} }
 func (a Uint16Array) UnsafeArray() Array         { return Array{a.array} }
@@ -269,8 +273,13 @@ func UnsafeUint32Array(base unsafe.Pointer, length int, offset uintptr) Uint32Ar
 	return Uint32Array{makeArray(base, uintptr(length), offset)}
 }
 
-func (a Uint32Array) Len() int                   { return int(a.len) }
-func (a Uint32Array) Index(i int) uint32         { return *(*uint32)(a.index(i)) }
+func (a Uint32Array) Len() int { return int(a.len) }
+func (a Uint32Array) Index(i int) uint32 {
+
+	return *(*uint32)(unsafe.Add(a.index(i), 4))
+	//	return *(*uint32)(a.index(i))
+
+}
 func (a Uint32Array) Slice(i, j int) Uint32Array { return Uint32Array{a.slice(i, j)} }
 func (a Uint32Array) Uint8Array() Uint8Array     { return Uint8Array{a.array} }
 func (a Uint32Array) Uint16Array() Uint16Array   { return Uint16Array{a.array} }
