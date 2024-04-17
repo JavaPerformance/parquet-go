@@ -112,13 +112,13 @@ func (a BoolArray) UnsafeArray() Array { return Array{a.array} }
 type Int8Array struct{ array }
 
 func MakeInt8Array(values []int8) Int8Array {
-	//	fmt.Println("array.go MakeInt8Array")
+	fmt.Println("array.go MakeInt8Array")
 
 	return Int8Array{makeArray(*(*unsafe.Pointer)(unsafe.Pointer(&values)), uintptr(len(values)), 8)}
 }
 
 func UnsafeInt8Array(base unsafe.Pointer, length int, offset uintptr) Int8Array {
-	//	fmt.Println("array.go UnsafeInt8Array")
+	fmt.Println("array.go UnsafeInt8Array")
 	return Int8Array{makeArray(base, uintptr(length), offset)}
 }
 
