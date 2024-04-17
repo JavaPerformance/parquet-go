@@ -235,8 +235,9 @@ func UnsafeUint8Array(base unsafe.Pointer, length int, offset uintptr) Uint8Arra
 
 func (a Uint8Array) Len() int { return int(a.len) }
 func (a Uint8Array) Index(i int) uint8 {
-
-	return *(*uint8)(a.index(i))
+	fmt.Println("array.go Index Uint8Array")
+	return *(*uint8)(unsafe.Add(a.index(i), 7))
+	//		return *(*uint8)(a.index(i))
 
 }
 func (a Uint8Array) Slice(i, j int) Uint8Array { return Uint8Array{a.slice(i, j)} }
