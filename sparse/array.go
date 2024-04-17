@@ -9,7 +9,7 @@ import (
 type Array struct{ array }
 
 func UnsafeArray(base unsafe.Pointer, length int, offset uintptr) Array {
-	fmt.Printf("sparce.array.go UnsafeArray base %d len %d off %d\n", base, length, offset)
+	fmt.Printf("sparse.array.go UnsafeArray base %d len %d off %d\n", base, length, offset)
 	return Array{makeArray(base, uintptr(length), offset)}
 }
 

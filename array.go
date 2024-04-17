@@ -14,7 +14,7 @@ func makeArrayValue(values []Value, offset uintptr) sparse.Array {
 
 	ptr := *(*unsafe.Pointer)(unsafe.Pointer(&values))
 
-	fmt.Printf("makeArrayValue: ptr %d sizeOf(Value{}) %d\n", ptr, unsafe.Sizeof(Value{}))
+	fmt.Printf("makeArrayValue: ptr %d offset %d (%d) sizeOf(Value{}) %d\n", ptr, offset, unsafe.Add(ptr, offset), unsafe.Sizeof(Value{}))
 
 	return sparse.UnsafeArray(unsafe.Add(ptr, offset), len(values), unsafe.Sizeof(Value{}))
 
