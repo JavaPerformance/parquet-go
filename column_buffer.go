@@ -836,6 +836,12 @@ func (col *booleanColumnBuffer) WriteValues(values []Value) (int, error) {
 
 	fmt.Printf("unsafe.Offsetof(model.u64)) %d\n", unsafe.Offsetof(model.u64))
 
+	for i := 0; i < len(values); i++ {
+
+		fmt.Printf("values[%d] = %v\n", i, values[i])
+
+	}
+
 	xxx := makeArrayValue(values, unsafe.Offsetof(model.u64))
 
 	col.writeValues(xxx, columnLevels{})
@@ -921,7 +927,7 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 
 		fmt.Printf("writeValues: col.numValues: %d i: %d, x: %d y: %d\n", col.numValues, i, x, y)
 
-		fmt.Printf("rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i+1), i, bytes.Index(i))
+		fmt.Printf("rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i), i, bytes.Index(i))
 
 		b := bytes.Index(i)
 

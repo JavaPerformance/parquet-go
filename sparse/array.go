@@ -43,12 +43,12 @@ type array struct {
 }
 
 func makeArray(base unsafe.Pointer, length, offset uintptr) array {
-	//fmt.Println("spase.array.go makeArray")
+	fmt.Printf("spase.array.go makeArray ptr %d len %d off %d\n", base, length, offset)
 	return array{ptr: base, len: length, off: offset}
 }
 
 func (a array) index(i int) unsafe.Pointer {
-	//	fmt.Println("array.go index", i)
+	fmt.Printf("array.go index %d\n", i)
 	if uintptr(i) >= a.len {
 		panic("index out of bounds")
 	}
@@ -56,7 +56,7 @@ func (a array) index(i int) unsafe.Pointer {
 }
 
 func (a array) slice(i, j int) array {
-	//	fmt.Println("array.go slice")
+	fmt.Printf("array.go slice %d %d\n", i, j)
 	if uintptr(i) > a.len || uintptr(j) > a.len || i > j {
 		panic("slice index out of bounds")
 	}
@@ -68,7 +68,7 @@ func (a array) slice(i, j int) array {
 }
 
 func (a array) offset(off uintptr) array {
-	//	fmt.Println("array.go offset")
+	fmt.Printf("array.go offset %d\n", off)
 	if a.ptr == nil {
 		panic("offset of nil array")
 	}
@@ -91,9 +91,18 @@ func UnsafeBoolArray(base unsafe.Pointer, length int, offset uintptr) BoolArray 
 	return BoolArray{makeArray(base, uintptr(length), offset)}
 }
 
-func (a BoolArray) Len() int                 { return int(a.len) }
-func (a BoolArray) Index(i int) bool         { return *(*byte)(a.index(i)) != 0 }
-func (a BoolArray) Slice(i, j int) BoolArray { return BoolArray{a.slice(i, j)} }
+func (a BoolArray) Len() int {
+	fmt.Println("array.go Len BoolArray")
+	return int(a.len)
+}
+func (a BoolArray) Index(i int) bool {
+	fmt.Printf("array.go Index %d BoolArray\n", i)
+	return *(*byte)(a.index(i)) != 0
+}
+func (a BoolArray) Slice(i, j int) BoolArray {
+	fmt.Printf("array.go Slice %d %d  BoolArray\n", i, j)
+	return BoolArray{a.slice(i, j)}
+}
 func (a BoolArray) Uint8Array() Uint8Array {
 	fmt.Println("array.go Uint8Array BoolArray")
 	return Uint8Array{a.array}
