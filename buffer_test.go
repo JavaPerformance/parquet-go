@@ -529,6 +529,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 		_, err := buffer.WriteRows([]parquet.Row{batch[i : i+1]})
 		fmt.Println("4.5")
 		if err != nil {
+			t.Log("FAIL")
 			t.Fatalf("writing value to row group: %v", err)
 		}
 	}
@@ -538,6 +539,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	fmt.Printf("5.5 %d\n", numRows)
 
 	if numRows != int64(len(batch)) {
+		t.Log("FAIL")
 		t.Fatalf("number of rows mismatch: want=%d got=%d", len(batch), numRows)
 	}
 	fmt.Println("6")
@@ -575,12 +577,14 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	numValues := page.NumValues()
 
 	if numValues != int64(len(batch)) {
+		t.Log("FAIL")
 		t.Fatalf("number of values mistmatch: want=%d got=%d", len(batch), numValues)
 	}
 	fmt.Println("9")
 
 	numNulls := page.NumNulls()
 	if numNulls != 0 {
+		t.Log("FAIL")
 		t.Fatalf("number of nulls mismatch: want=0 got=%d", numNulls)
 	}
 	fmt.Println("10")
@@ -604,11 +608,13 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	deprecated.PrintBitsWithSpaces(maxValue.Bytes())
 
 	if !parquet.Equal(min, minValue) {
+		t.Log("FAIL")
 		t.Fatalf("min value mismatch: want=%v got=%v", minValue, min)
 	}
 	fmt.Println("12")
 
 	if !parquet.Equal(max, maxValue) {
+		t.Log("FAIL")
 		t.Fatalf("max value mismatch: want=%v got=%v", maxValue, max)
 	}
 	fmt.Println("13")
@@ -636,10 +642,12 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 			n, err := test.reader.ReadValues(v[:])
 			if n > 0 {
 				if n != 1 {
+					t.Log("FAIL")
 					t.Fatalf("reading value from %q reader returned the wrong count: want=1 got=%d", test.scenario, n)
 				}
 				if i < len(test.values) {
 					if !parquet.Equal(v[0], test.values[i]) {
+						t.Log("FAIL")
 						t.Fatalf("%q value at index %d mismatches: want=%v got=%v", test.scenario, i, test.values[i], v[0])
 					}
 				}
@@ -649,12 +657,14 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 				if err == io.EOF {
 					break
 				}
+				t.Log("FAIL")
 				t.Fatalf("reading value from %q reader: %v", test.scenario, err)
 			}
 		}
 		fmt.Println("16")
 
 		if i != len(test.values) {
+			t.Log("FAIL")
 			t.Errorf("wrong number of values read from %q reader: want=%d got=%d", test.scenario, len(test.values), i)
 		}
 	}
