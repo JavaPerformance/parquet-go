@@ -1,4 +1,4 @@
-//go:build purego || !amd64
+//go:build purego || (!amd64 && !s390x)
 
 package sparse
 

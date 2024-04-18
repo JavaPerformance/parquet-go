@@ -1,5 +1,3 @@
-//go:build purego || !s390x
-
 package sparse
 
 import (
