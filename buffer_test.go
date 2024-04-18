@@ -608,13 +608,13 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	deprecated.PrintBitsWithSpaces(maxValue.Bytes())
 
 	if !parquet.Equal(min, minValue) {
-		t.Log("FAIL")
+		//t.Log("FAIL")
 		t.Fatalf("min value mismatch: want=%v got=%v", minValue, min)
 	}
 	fmt.Println("12")
 
 	if !parquet.Equal(max, maxValue) {
-		t.Log("FAIL")
+		//	t.Log("FAIL")
 		t.Fatalf("max value mismatch: want=%v got=%v", maxValue, max)
 	}
 	fmt.Println("13")
