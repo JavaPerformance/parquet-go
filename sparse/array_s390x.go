@@ -1,4 +1,4 @@
-//go:build purego || !s390x
+//go:build s390xx
 
 package sparse
 
@@ -127,8 +127,8 @@ func UnsafeInt8Array(base unsafe.Pointer, length int, offset uintptr) Int8Array 
 
 func (a Int8Array) Len() int { return int(a.len) }
 func (a Int8Array) Index(i int) int8 {
-	//return *(*int8)(unsafe.Add(a.index(i), 7))
-	return *(*int8)(a.index(i))
+	return *(*int8)(unsafe.Add(a.index(i), 7))
+	//return *(*int8)(a.index(i))
 }
 func (a Int8Array) Slice(i, j int) Int8Array { return Int8Array{a.slice(i, j)} }
 func (a Int8Array) Uint8Array() Uint8Array   { return Uint8Array{a.array} }
@@ -146,8 +146,8 @@ func UnsafeInt16Array(base unsafe.Pointer, length int, offset uintptr) Int16Arra
 
 func (a Int16Array) Len() int { return int(a.len) }
 func (a Int16Array) Index(i int) int16 {
-	//return *(*int16)(unsafe.Add(a.index(i), 6))
-	return *(*int16)(a.index(i))
+	return *(*int16)(unsafe.Add(a.index(i), 6))
+	//return *(*int16)(a.index(i))
 }
 func (a Int16Array) Slice(i, j int) Int16Array { return Int16Array{a.slice(i, j)} }
 func (a Int16Array) Int8Array() Int8Array      { return Int8Array{a.array} }
@@ -167,8 +167,8 @@ func UnsafeInt32Array(base unsafe.Pointer, length int, offset uintptr) Int32Arra
 
 func (a Int32Array) Len() int { return int(a.len) }
 func (a Int32Array) Index(i int) int32 {
-	//return *(*int32)(unsafe.Add(a.index(i), 4))
-	return *(*int32)(a.index(i))
+	return *(*int32)(unsafe.Add(a.index(i), 4))
+	//	return *(*int32)(a.index(i))
 }
 func (a Int32Array) Slice(i, j int) Int32Array { return Int32Array{a.slice(i, j)} }
 func (a Int32Array) Int8Array() Int8Array      { return Int8Array{a.array} }
@@ -212,8 +212,8 @@ func UnsafeFloat32Array(base unsafe.Pointer, length int, offset uintptr) Float32
 
 func (a Float32Array) Len() int { return int(a.len) }
 func (a Float32Array) Index(i int) float32 {
-	//return *(*float32)(unsafe.Add(a.index(i), 4))
-	return *(*float32)(a.index(i))
+	return *(*float32)(unsafe.Add(a.index(i), 4))
+	//return *(*float32)(a.index(i))
 }
 func (a Float32Array) Slice(i, j int) Float32Array { return Float32Array{a.slice(i, j)} }
 func (a Float32Array) Array() Array                { return Array{a.array} }
@@ -252,8 +252,8 @@ func (a Uint8Array) Len() int { return int(a.len) }
 
 func (a Uint8Array) Index(i int) uint8 {
 	fmt.Println("array.go Index Uint8Array")
-	//return *(*uint8)(unsafe.Add(a.index(i), 7))
-	return *(*uint8)(a.index(i))
+	return *(*uint8)(unsafe.Add(a.index(i), 7))
+	//		return *(*uint8)(a.index(i))
 
 }
 func (a Uint8Array) Slice(i, j int) Uint8Array { return Uint8Array{a.slice(i, j)} }
@@ -271,8 +271,8 @@ func UnsafeUint16Array(base unsafe.Pointer, length int, offset uintptr) Uint16Ar
 
 func (a Uint16Array) Len() int { return int(a.len) }
 func (a Uint16Array) Index(i int) uint16 {
-	//return *(*uint16)(unsafe.Add(a.index(i), 6))
-	return *(*uint16)(a.index(i))
+	return *(*uint16)(unsafe.Add(a.index(i), 6))
+	//	return *(*uint16)(a.index(i))
 }
 func (a Uint16Array) Slice(i, j int) Uint16Array { return Uint16Array{a.slice(i, j)} }
 func (a Uint16Array) Uint8Array() Uint8Array     { return Uint8Array{a.array} }
@@ -291,8 +291,8 @@ func UnsafeUint32Array(base unsafe.Pointer, length int, offset uintptr) Uint32Ar
 func (a Uint32Array) Len() int { return int(a.len) }
 func (a Uint32Array) Index(i int) uint32 {
 
-	//return *(*uint32)(unsafe.Add(a.index(i), 4))
-	return *(*uint32)(a.index(i))
+	return *(*uint32)(unsafe.Add(a.index(i), 4))
+	//	return *(*uint32)(a.index(i))
 
 }
 func (a Uint32Array) Slice(i, j int) Uint32Array { return Uint32Array{a.slice(i, j)} }
