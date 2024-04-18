@@ -1,4 +1,4 @@
-//go:build s390xx
+//go:build s390x
 
 package sparse
 
