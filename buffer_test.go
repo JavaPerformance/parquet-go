@@ -623,7 +623,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	// including repeated ones, which makes it OK to slice the pages using the
 	// number of values as a proxy for the row indexes.
 	halfValues := numValues / 2
-	fmt.Println("14")
+	fmt.Printf("14: halfValues=%d\n", halfValues)
 
 	for _, test := range [...]struct {
 		scenario string
@@ -634,7 +634,11 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 		{"head", batch[:halfValues], page.Slice(0, halfValues).Values()},
 		{"tail", batch[halfValues:], page.Slice(halfValues, numValues).Values()},
 	} {
-		fmt.Println("15")
+		fmt.Printf("15: %s\n", test.scenario)
+
+		for _, value := range test.values {
+			fmt.Printf("value: %v\n", value)
+		}
 
 		v := [1]parquet.Value{}
 		fmt.Printf("v = %v\n", v)
