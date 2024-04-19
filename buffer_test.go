@@ -634,17 +634,25 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 		{"head", batch[:halfValues], page.Slice(0, halfValues).Values()},
 		{"tail", batch[halfValues:], page.Slice(halfValues, numValues).Values()},
 	} {
+		fmt.Println("15")
+
 		v := [1]parquet.Value{}
 		i := 0
-		fmt.Println("15")
+		fmt.Println("15.1")
 
 		for {
 			n, err := test.reader.ReadValues(v[:])
+			fmt.Println("15.2")
+
 			if n > 0 {
+				fmt.Println("15.3")
+
 				if n != 1 {
 					t.Log("FAIL")
 					t.Fatalf("reading value from %q reader returned the wrong count: want=1 got=%d", test.scenario, n)
 				}
+				fmt.Println("15.4")
+
 				if i < len(test.values) {
 					if !parquet.Equal(v[0], test.values[i]) {
 						t.Log("FAIL")
@@ -653,6 +661,8 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 				}
 				i++
 			}
+			fmt.Println("15.5")
+
 			if err != nil {
 				if err == io.EOF {
 					break
@@ -660,6 +670,8 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 				t.Log("FAIL")
 				t.Fatalf("reading value from %q reader: %v", test.scenario, err)
 			}
+			fmt.Println("15.6")
+
 		}
 		fmt.Println("16")
 
