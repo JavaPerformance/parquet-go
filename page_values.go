@@ -1,6 +1,7 @@
 package parquet
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/parquet-go/parquet-go/deprecated"
@@ -163,6 +164,7 @@ func (r *int32PageValues) ReadInt32s(values []int32) (n int, err error) {
 }
 
 func (r *int32PageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("page_values.go ReadValues int32PageValues")
 	for n < len(values) && r.offset < len(r.page.values) {
 		values[n] = r.page.makeValue(r.page.values[r.offset])
 		r.offset++
