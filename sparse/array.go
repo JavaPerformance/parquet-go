@@ -50,7 +50,7 @@ func makeArray(base unsafe.Pointer, length, offset uintptr) array {
 }
 
 func (a array) index(i int) unsafe.Pointer {
-	fmt.Printf("array.go index %d\n", i)
+	//fmt.Printf("array.go index %d\n", i)
 	if uintptr(i) >= a.len {
 		panic("index out of bounds")
 	}

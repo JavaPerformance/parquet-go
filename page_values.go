@@ -16,9 +16,12 @@ type optionalPageValues struct {
 }
 
 func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
+
 	maxDefinitionLevel := r.page.maxDefinitionLevel
 	definitionLevels := r.page.definitionLevels
 	columnIndex := ^int16(r.page.Column())
+
+	fmt.Printf("page_values.go ReadValues optionalPageValues: maxDefinitionLevel %d definitionLevels %d columnIndex %d\n", maxDefinitionLevel, definitionLevels, columnIndex)
 
 	for n < len(values) && r.offset < len(definitionLevels) {
 		for n < len(values) && r.offset < len(definitionLevels) && definitionLevels[r.offset] != maxDefinitionLevel {
@@ -26,6 +29,7 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 				definitionLevel: definitionLevels[r.offset],
 				columnIndex:     columnIndex,
 			}
+			fmt.Println("1 n++")
 			r.offset++
 			n++
 		}
@@ -40,6 +44,7 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 		if n < i {
 			for j, err = r.values.ReadValues(values[n:i]); j > 0; j-- {
 				values[n].definitionLevel = maxDefinitionLevel
+				fmt.Println("2 n++")
 				r.offset++
 				n++
 			}
@@ -196,6 +201,7 @@ func (r *int64PageValues) ReadInt64s(values []int64) (n int, err error) {
 }
 
 func (r *int64PageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("page_values.go ReadValues int64PageValues")
 	for n < len(values) && r.offset < len(r.page.values) {
 		values[n] = r.page.makeValue(r.page.values[r.offset])
 		r.offset++
