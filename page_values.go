@@ -44,7 +44,7 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 		if n < i {
 			fmt.Printf("page_values.go ReadValues optionalPageValues: values[%d:%d]\n", n, i)
 
-			ff := make([]Value, n)
+			ff := make([]Value, len(values))
 
 			valuesRead, _ := r.values.ReadValues(ff)
 
