@@ -373,6 +373,7 @@ func (col *optionalColumnBuffer) writeValues(rows sparse.Array, levels columnLev
 }
 
 func (col *optionalColumnBuffer) ReadValuesAt(values []Value, offset int64) (int, error) {
+	fmt.Println("ReadValues optionalColumnBuffer")
 	length := int64(len(col.definitionLevels))
 	if offset < 0 {
 		return 0, errRowIndexOutOfBounds(offset, length)
@@ -958,6 +959,7 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *booleanColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r1")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1057,6 +1059,7 @@ func (col *int32ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *int32ColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r2")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1155,6 +1158,7 @@ func (col *int64ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *int64ColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r3")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1252,6 +1256,7 @@ func (col *int96ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *int96ColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r4")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1350,6 +1355,7 @@ func (col *floatColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *floatColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r5")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1448,6 +1454,7 @@ func (col *doubleColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *doubleColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r5")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1601,6 +1608,7 @@ func (col *byteArrayColumnBuffer) writeValues(rows sparse.Array, _ columnLevels)
 }
 
 func (col *byteArrayColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r6")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1742,6 +1750,7 @@ func (col *fixedLenByteArrayColumnBuffer) writeValues(rows sparse.Array, _ colum
 }
 
 func (col *fixedLenByteArrayColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r7")
 	i := int(offset) * col.size
 	switch {
 	case i < 0:
@@ -1840,6 +1849,7 @@ func (col *uint32ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *uint32ColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r8")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -1938,6 +1948,7 @@ func (col *uint64ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *uint64ColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r9")
 	i := int(offset)
 	switch {
 	case i < 0:
@@ -2032,6 +2043,7 @@ func (col *be128ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *be128ColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r10")
 	i := int(offset)
 	switch {
 	case i < 0:

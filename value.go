@@ -79,7 +79,10 @@ type ValueWriterTo interface {
 // ValueReaderFunc is a function type implementing the ValueReader interface.
 type ValueReaderFunc func([]Value) (int, error)
 
-func (f ValueReaderFunc) ReadValues(values []Value) (int, error) { return f(values) }
+func (f ValueReaderFunc) ReadValues(values []Value) (int, error) {
+	fmt.Println("ReadValues ValueReaderFunc")
+	return f(values)
+}
 
 // ValueWriterFunc is a function type implementing the ValueWriter interface.
 type ValueWriterFunc func([]Value) (int, error)

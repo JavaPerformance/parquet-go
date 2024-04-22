@@ -16,6 +16,7 @@ type optionalPageValues struct {
 }
 
 func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("r15")
 	maxDefinitionLevel := r.page.maxDefinitionLevel
 	definitionLevels := r.page.definitionLevels
 	columnIndex := ^int16(r.page.Column())

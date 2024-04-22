@@ -1,6 +1,7 @@
 package parquet
 
 import (
+	"fmt"
 	"io"
 	"math/bits"
 	"unsafe"
@@ -1323,6 +1324,7 @@ type indexedPageValues struct {
 }
 
 func (r *indexedPageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("r12")
 	if n = len(r.page.values) - r.offset; n == 0 {
 		return 0, io.EOF
 	}
@@ -1427,6 +1429,7 @@ func (col *indexedColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *indexedColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("r13")
 	i := int(offset)
 	switch {
 	case i < 0:

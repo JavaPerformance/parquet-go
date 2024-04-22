@@ -321,8 +321,11 @@ func (page *errorPage) Values() ValueReader               { return errorPageValu
 
 type errorPageValues struct{ page *errorPage }
 
-func (r errorPageValues) ReadValues([]Value) (int, error) { return 0, r.page.err }
-func (r errorPageValues) Close() error                    { return nil }
+func (r errorPageValues) ReadValues([]Value) (int, error) {
+	fmt.Println("r14")
+	return 0, r.page.err
+}
+func (r errorPageValues) Close() error { return nil }
 
 func errPageBoundsOutOfRange(i, j, n int64) error {
 	return fmt.Errorf("page bounds out of range [%d:%d]: with length %d", i, j, n)
