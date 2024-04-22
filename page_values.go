@@ -42,6 +42,7 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 		}
 
 		if n < i {
+			fmt.Printf("page_values.go ReadValues optionalPageValues: values[%d:%i]\n", n, i, j)
 
 			for j, err = r.values.ReadValues(values[n:i]); j > 0; j-- {
 				fmt.Printf("page_values.go ReadValues optionalPageValues: ReadValues n=%d i=%d j=%d\n", n, i, j)
@@ -166,6 +167,7 @@ func (r *int32PageValues) Read(b []byte) (n int, err error) {
 }
 
 func (r *int32PageValues) ReadInt32s(values []int32) (n int, err error) {
+	fmt.Println("ReadInt32s int32PageValues")
 	n = copy(values, r.page.values[r.offset:])
 	r.offset += n
 	if r.offset == len(r.page.values) {
@@ -329,6 +331,7 @@ func (r *byteArrayPageValues) ReadRequired(values []byte) (int, error) {
 }
 
 func (r *byteArrayPageValues) ReadByteArrays(values []byte) (int, error) {
+
 	n, _, err := r.readByteArrays(values)
 	return n, err
 }
@@ -426,6 +429,8 @@ func (r *uint32PageValues) ReadUint32s(values []uint32) (n int, err error) {
 }
 
 func (r *uint32PageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("ReadInt32s uint32PageValues")
+
 	for n < len(values) && r.offset < len(r.page.values) {
 		values[n] = r.page.makeValue(r.page.values[r.offset])
 		r.offset++
