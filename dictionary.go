@@ -1326,16 +1326,27 @@ type indexedPageValues struct {
 func (r *indexedPageValues) ReadValues(values []Value) (n int, err error) {
 	fmt.Println("r12")
 	if n = len(r.page.values) - r.offset; n == 0 {
+		fmt.Println("r12.1")
+
 		return 0, io.EOF
 	}
+	fmt.Println("r12.2")
 	if n > len(values) {
+		fmt.Println("r12.3")
+
 		n = len(values)
 	}
+	fmt.Println("r12.4")
+
 	r.page.typ.dict.Lookup(r.page.values[r.offset:r.offset+n], values[:n])
 	r.offset += n
+	fmt.Println("r12.5")
+
 	if r.offset == len(r.page.values) {
+		fmt.Println("r12.6")
 		err = io.EOF
 	}
+	fmt.Println("r12.7")
 	return n, err
 }
 
