@@ -365,10 +365,20 @@ func makeValueBoolean(value bool) Value {
 
 func makeValueInt32(value int32) Value {
 	fmt.Println("makeValueInt32") //TODO Here?
-	return Value{
+	v := Value{
 		kind: ^int8(Int32),
 		u64:  uint64(value),
 	}
+	fmt.Printf("makeValueInt32 in: %d out: %d\n", value, v) //TODO Here?
+
+	return v
+	/*
+		return Value{
+			kind: ^int8(Int32),
+			u64:  uint64(value),
+		}
+
+	*/
 }
 
 func makeValueInt64(value int64) Value {
