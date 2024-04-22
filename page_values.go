@@ -44,6 +44,14 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 		if n < i {
 			fmt.Printf("page_values.go ReadValues optionalPageValues: values[%d:%d]\n", n, i)
 
+			ff := make([]Value, n)
+
+			valuesRead, _ := r.values.ReadValues(ff)
+
+			for ii := range ff {
+				fmt.Printf("%d page value[%d]=%v\n", valuesRead, ii, ff[ii])
+			}
+
 			for j, err = r.values.ReadValues(values[n:i]); j > 0; j-- {
 				fmt.Printf("page_values.go ReadValues optionalPageValues: ReadValues n=%d i=%d j=%d\n", n, i, j)
 				values[n].definitionLevel = maxDefinitionLevel
