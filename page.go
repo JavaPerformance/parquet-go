@@ -367,6 +367,7 @@ func (page *optionalPage) DefinitionLevels() []byte { return page.definitionLeve
 func (page *optionalPage) Data() encoding.Values { return page.base.Data() }
 
 func (page *optionalPage) Values() ValueReader {
+	fmt.Println("page.go Values optionalPage")
 	return &optionalPageValues{
 		page:   page,
 		values: page.base.Values(),

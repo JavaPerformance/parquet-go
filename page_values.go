@@ -28,7 +28,7 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 				definitionLevel: definitionLevels[r.offset],
 				columnIndex:     columnIndex,
 			}
-			fmt.Println("1 n++")
+			fmt.Println("page_values.go ReadValues optionalPageValues: n++ (1)")
 			r.offset++
 			n++
 		}
@@ -41,9 +41,11 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 		}
 
 		if n < i {
+
 			for j, err = r.values.ReadValues(values[n:i]); j > 0; j-- {
+				fmt.Printf("page_values.go ReadValues optionalPageValues: ReadValues n=%d i=%d j=%d\n", n, i, j)
 				values[n].definitionLevel = maxDefinitionLevel
-				fmt.Println("2 n++")
+				fmt.Println("page_values.go ReadValues optionalPageValues: n++ (2)")
 				r.offset++
 				n++
 			}
