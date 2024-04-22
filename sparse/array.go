@@ -170,13 +170,17 @@ func (a Int32Array) Index(i int) int32 {
 	//return *(*int32)(unsafe.Add(a.index(i), 4))
 	return *(*int32)(a.index(i))
 }
-func (a Int32Array) Slice(i, j int) Int32Array { return Int32Array{a.slice(i, j)} }
-func (a Int32Array) Int8Array() Int8Array      { return Int8Array{a.array} }
-func (a Int32Array) Int16Array() Int16Array    { return Int16Array{a.array} }
-func (a Int32Array) Uint8Array() Uint8Array    { return Uint8Array{a.array} }
-func (a Int32Array) Uint16Array() Uint16Array  { return Uint16Array{a.array} }
-func (a Int32Array) Uint32Array() Uint32Array  { return Uint32Array{a.array} }
-func (a Int32Array) UnsafeArray() Array        { return Array{a.array} }
+func (a Int32Array) Slice(i, j int) Int32Array {
+	fmt.Println("array.go Slice Int32Array")
+
+	return Int32Array{a.slice(i, j)}
+}
+func (a Int32Array) Int8Array() Int8Array     { return Int8Array{a.array} }
+func (a Int32Array) Int16Array() Int16Array   { return Int16Array{a.array} }
+func (a Int32Array) Uint8Array() Uint8Array   { return Uint8Array{a.array} }
+func (a Int32Array) Uint16Array() Uint16Array { return Uint16Array{a.array} }
+func (a Int32Array) Uint32Array() Uint32Array { return Uint32Array{a.array} }
+func (a Int32Array) UnsafeArray() Array       { return Array{a.array} }
 
 type Int64Array struct{ array }
 

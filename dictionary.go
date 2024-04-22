@@ -290,6 +290,7 @@ func (d *int32Dictionary) insert(indexes []int32, rows sparse.Array) {
 }
 
 func (d *int32Dictionary) Lookup(indexes []int32, values []Value) {
+	fmt.Println("Lookup int32")
 	model := d.makeValue(0)
 	memsetValues(values, model)
 	d.lookup(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64)))
