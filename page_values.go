@@ -42,7 +42,7 @@ func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
 		}
 
 		if n < i {
-			fmt.Printf("page_values.go ReadValues optionalPageValues: values[%d:%i]\n", n, i)
+			fmt.Printf("page_values.go ReadValues optionalPageValues: values[%d:%d]\n", n, i)
 
 			for j, err = r.values.ReadValues(values[n:i]); j > 0; j-- {
 				fmt.Printf("page_values.go ReadValues optionalPageValues: ReadValues n=%d i=%d j=%d\n", n, i, j)
