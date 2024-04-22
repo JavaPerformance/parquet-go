@@ -578,7 +578,9 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	ff := make([]parquet.Value, numValues)
 
-	valuesRead, _ := page.Values().ReadValues(ff) // TODO Here
+	ppp := page.Values()
+
+	valuesRead, _ := ppp.ReadValues(ff) // TODO Here
 
 	fmt.Printf("8.1 valuesRead: %d\n", valuesRead)
 

@@ -741,8 +741,8 @@ func (page *int32Page) Slice(i, j int64) Page {
 }
 
 func (page *int32Page) makeValue(v int32) Value {
-	fmt.Println("makeValue int32Page")
 	value := makeValueInt32(v)
+	fmt.Printf("makeValue int32Page %d = %v\n", v, value)
 	value.columnIndex = page.columnIndex
 	return value
 }
