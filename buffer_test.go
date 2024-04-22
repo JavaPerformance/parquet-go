@@ -578,16 +578,12 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	ff := make([]parquet.Value, numValues)
 
-	valuesRead, e := page.Values().ReadValues(ff)
+	valuesRead, _ := page.Values().ReadValues(ff) // TODO Here
 
-	if e != nil {
-		t.Log("ERROR")
-	} else {
-		fmt.Printf("valueRead: %d\n", valuesRead)
-	}
+	fmt.Printf("8.1 valuesRead: %d\n", valuesRead)
 
 	for ii := range ff {
-		fmt.Printf("page value[%d]=%v\n", ii, ff[ii])
+		fmt.Printf("8.2 page value[%d]=%v\n", ii, ff[ii])
 	}
 
 	if numValues != int64(len(batch)) {
