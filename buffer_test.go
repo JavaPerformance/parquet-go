@@ -581,7 +581,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	valuesRead, e := page.Values().ReadValues(ff)
 
 	if e != nil {
-		t.Log("FAIL!!")
+		t.Log("ERROR")
 	} else {
 		fmt.Printf("valueRead: %d\n", valuesRead)
 	}
