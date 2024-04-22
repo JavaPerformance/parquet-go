@@ -16,7 +16,6 @@ type optionalPageValues struct {
 }
 
 func (r *optionalPageValues) ReadValues(values []Value) (n int, err error) {
-
 	maxDefinitionLevel := r.page.maxDefinitionLevel
 	definitionLevels := r.page.definitionLevels
 	columnIndex := ^int16(r.page.Column())
@@ -69,6 +68,7 @@ type repeatedPageValues struct {
 }
 
 func (r *repeatedPageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("ReadValues repeatedPageValues")
 	maxDefinitionLevel := r.page.maxDefinitionLevel
 	definitionLevels := r.page.definitionLevels
 	repetitionLevels := r.page.repetitionLevels
@@ -126,6 +126,7 @@ type booleanPageValues struct {
 }
 
 func (r *booleanPageValues) ReadBooleans(values []bool) (n int, err error) {
+	fmt.Println("ReadBooleans booleanPageValues")
 	for n < len(values) && r.offset < int(r.page.numValues) {
 		values[n] = r.page.valueAt(r.offset)
 		r.offset++
@@ -138,6 +139,7 @@ func (r *booleanPageValues) ReadBooleans(values []bool) (n int, err error) {
 }
 
 func (r *booleanPageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("ReadValues booleanPageValues")
 	for n < len(values) && r.offset < int(r.page.numValues) {
 		values[n] = r.page.makeValue(r.page.valueAt(r.offset))
 		r.offset++
@@ -155,6 +157,7 @@ type int32PageValues struct {
 }
 
 func (r *int32PageValues) Read(b []byte) (n int, err error) {
+	fmt.Println("ReadValues booleanPageValues")
 	n, err = r.ReadInt32s(unsafecast.BytesToInt32(b))
 	return 4 * n, err
 }
@@ -187,11 +190,13 @@ type int64PageValues struct {
 }
 
 func (r *int64PageValues) Read(b []byte) (n int, err error) {
+	fmt.Println("Read int64PageValues")
 	n, err = r.ReadInt64s(unsafecast.BytesToInt64(b))
 	return 8 * n, err
 }
 
 func (r *int64PageValues) ReadInt64s(values []int64) (n int, err error) {
+	fmt.Println("ReadInt64s int64PageValues")
 	n = copy(values, r.page.values[r.offset:])
 	r.offset += n
 	if r.offset == len(r.page.values) {
@@ -348,6 +353,7 @@ func (r *byteArrayPageValues) readByteArrays(values []byte) (c, n int, err error
 }
 
 func (r *byteArrayPageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("page_values.go ReadValues byteArrayPageValues")
 	numValues := r.page.len()
 	for n < len(values) && r.offset < numValues {
 		values[n] = r.page.makeValueBytes(r.page.index(r.offset))
@@ -434,11 +440,13 @@ type uint64PageValues struct {
 }
 
 func (r *uint64PageValues) Read(b []byte) (n int, err error) {
+	fmt.Println("page_values.go Read uint64PageValues")
 	n, err = r.ReadUint64s(unsafecast.BytesToUint64(b))
 	return 8 * n, err
 }
 
 func (r *uint64PageValues) ReadUint64s(values []uint64) (n int, err error) {
+	fmt.Println("page_values.go ReadUint64s uint64PageValues")
 	n = copy(values, r.page.values[r.offset:])
 	r.offset += n
 	if r.offset == len(r.page.values) {
@@ -448,6 +456,7 @@ func (r *uint64PageValues) ReadUint64s(values []uint64) (n int, err error) {
 }
 
 func (r *uint64PageValues) ReadValues(values []Value) (n int, err error) {
+	fmt.Println("page_values.go ReadValues uint64PageValues")
 	for n < len(values) && r.offset < len(r.page.values) {
 		values[n] = r.page.makeValue(r.page.values[r.offset])
 		r.offset++
