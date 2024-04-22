@@ -364,7 +364,7 @@ func makeValueBoolean(value bool) Value {
 }
 
 func makeValueInt32(value int32) Value {
-	fmt.Println("makeValueInt32") //TODO Here
+	fmt.Println("makeValueInt32") //TODO Here?
 	return Value{
 		kind: ^int8(Int32),
 		u64:  uint64(value),
