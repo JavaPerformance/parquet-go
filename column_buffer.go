@@ -835,11 +835,11 @@ func (col *booleanColumnBuffer) WriteValues(values []Value) (int, error) {
 	fmt.Println("column_buffer.go WriteValues1")
 	var model Value
 
-	fmt.Printf("unsafe.Offsetof(model.u64)) %d\n", unsafe.Offsetof(model.u64))
+	fmt.Printf("WriteValues: unsafe.Offsetof(model.u64)) %d\n", unsafe.Offsetof(model.u64))
 
 	for i := 0; i < len(values); i++ {
 
-		fmt.Printf("values[%d] = %v\n", i, values[i])
+		fmt.Printf("WriteValues: values[%d] = %v\n", i, values[i])
 
 	}
 
@@ -871,7 +871,7 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 
 	fmt.Printf("writeValues: i %d, r %d\n", i, r)
 
-	fmt.Printf("rows.Index(i)")
+	fmt.Printf("WriteValues: rows.Index(i)")
 
 	bytes := rows.Uint8Array()
 
@@ -896,7 +896,7 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 			var b byte
 			for i < r {
 
-				fmt.Printf("rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i), i, bytes.Index(i))
+				fmt.Printf("WriteValues: rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i), i, bytes.Index(i))
 
 				v := bytes.Index(i)
 
@@ -928,7 +928,7 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 
 		fmt.Printf("writeValues: col.numValues: %d i: %d, x: %d y: %d\n", col.numValues, i, x, y)
 
-		fmt.Printf("rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i), i, bytes.Index(i))
+		fmt.Printf("WriteValues: rows.Index(%d) = %d bytes.Index(%d) = %d\n", i, rows.Index(i), i, bytes.Index(i))
 
 		b := bytes.Index(i)
 
@@ -936,11 +936,11 @@ func (col *booleanColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 
 		fmt.Printf("writeValues: col.bits[%d] = %d\n", x, col.bits[x])
 
-		fmt.Printf("((%d & 1) << %d) = %d\n", b, y, ((b & 1) << y))
+		fmt.Printf("WriteValues: ((%d & 1) << %d) = %d\n", b, y, ((b & 1) << y))
 
-		fmt.Printf("(col.bits[%d] & ^(1 << %d) = %d\n", x, y, (col.bits[x] & ^(1 << y)))
+		fmt.Printf("WriteValues: (col.bits[%d] & ^(1 << %d) = %d\n", x, y, (col.bits[x] & ^(1 << y)))
 
-		fmt.Printf("col.bits[x] = %d\n", ((b&1)<<y)|(col.bits[x] & ^(1<<y)))
+		fmt.Printf("WriteValues: col.bits[x] = %d\n", ((b&1)<<y)|(col.bits[x] & ^(1<<y)))
 
 		col.bits[x] = ((b & 1) << y) | (col.bits[x] & ^(1 << y))
 
@@ -1015,7 +1015,11 @@ func (col *int32ColumnBuffer) Dictionary() Dictionary { return nil }
 
 func (col *int32ColumnBuffer) Pages() Pages { return onePage(col.Page()) }
 
-func (col *int32ColumnBuffer) Page() Page { return &col.int32Page }
+func (col *int32ColumnBuffer) Page() Page {
+	fmt.Println("column_buffer.go Page")
+
+	return &col.int32Page
+}
 
 func (col *int32ColumnBuffer) Reset() { col.values = col.values[:0] }
 
@@ -1030,6 +1034,7 @@ func (col *int32ColumnBuffer) Swap(i, j int) {
 }
 
 func (col *int32ColumnBuffer) Write(b []byte) (int, error) {
+	fmt.Println("column_buffer.go Write")
 	if (len(b) % 4) != 0 {
 		return 0, fmt.Errorf("cannot write INT32 values from input of size %d", len(b))
 	}
@@ -1038,17 +1043,20 @@ func (col *int32ColumnBuffer) Write(b []byte) (int, error) {
 }
 
 func (col *int32ColumnBuffer) WriteInt32s(values []int32) (int, error) {
+	fmt.Println("column_buffer.go WriteInt32s")
 	col.values = append(col.values, values...)
 	return len(values), nil
 }
 
 func (col *int32ColumnBuffer) WriteValues(values []Value) (int, error) {
+	fmt.Println("column_buffer.go WriteValues")
 	var model Value
 	col.writeValues(makeArrayValue(values, unsafe.Offsetof(model.u64)), columnLevels{})
 	return len(values), nil
 }
 
 func (col *int32ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
+	fmt.Println("column_buffer.go WriteValues")
 	if n := len(col.values) + rows.Len(); n > cap(col.values) {
 		col.values = append(make([]int32, 0, max(n, 2*cap(col.values))), col.values...)
 	}
@@ -1059,6 +1067,7 @@ func (col *int32ColumnBuffer) writeValues(rows sparse.Array, _ columnLevels) {
 }
 
 func (col *int32ColumnBuffer) ReadValuesAt(values []Value, offset int64) (n int, err error) {
+	fmt.Println("column_buffer.go ReadValuesAt")
 	fmt.Println("r2")
 	i := int(offset)
 	switch {
