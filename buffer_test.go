@@ -576,6 +576,20 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	numValues := page.NumValues()
 
+	ff := make([]parquet.Value, numValues)
+
+	valuesRead, e := page.Values().ReadValues(ff)
+
+	if e != nil {
+		t.Log("FAIL!!")
+	} else {
+		fmt.Printf("valueRead: %d\n", valuesRead)
+	}
+
+	for ii := range ff {
+		fmt.Printf("page value[%d]=%v\n", ii, ff[ii])
+	}
+
 	if numValues != int64(len(batch)) {
 		t.Log("FAIL")
 		t.Fatalf("number of values mistmatch: want=%d got=%d", len(batch), numValues)
