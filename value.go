@@ -608,6 +608,7 @@ func (v Value) Column() int { return v.column() }
 //
 // If v is the null value, an nil byte slice is returned.
 func (v Value) Bytes() []byte {
+	fmt.Println("Bytes")
 	switch v.Kind() {
 	case Boolean:
 		buf := [8]byte{}
@@ -632,6 +633,7 @@ func (v Value) Bytes() []byte {
 //
 // If v is the null value, b is returned unchanged.
 func (v Value) AppendBytes(b []byte) []byte {
+	fmt.Println("AppendBytes")
 	buf := [8]byte{}
 	switch v.Kind() {
 	case Boolean:
