@@ -566,13 +566,19 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	fmt.Print("maxValue ")
 	deprecated.PrintBitsWithSpaces(maxValue.Bytes())
 
-	sortFunc(typ, batch)
+	//sortFunc(typ, batch)
 
-	sort.Sort(buffer)
+	//sort.Sort(buffer)
 
 	fmt.Println("8")
 
-	page := buffer.ColumnBuffers()[0].Page()
+	columnBuffers := buffer.ColumnBuffers()
+
+	columnBufferZero := columnBuffers[0]
+
+	page := columnBufferZero.Page()
+
+	//page := buffer.ColumnBuffers()[0].Page()
 
 	numValues := page.NumValues()
 

@@ -1017,7 +1017,6 @@ func (col *int32ColumnBuffer) Pages() Pages { return onePage(col.Page()) }
 
 func (col *int32ColumnBuffer) Page() Page {
 	fmt.Println("column_buffer.go Page")
-
 	return &col.int32Page
 }
 

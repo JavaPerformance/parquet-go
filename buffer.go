@@ -308,7 +308,10 @@ func (buf *Buffer) ColumnChunks() []ColumnChunk { return buf.chunks }
 // assertion if the program needed to write directly to the column buffers.
 // The presence of the ColumnChunks method is still required to satisfy the
 // RowGroup interface.
-func (buf *Buffer) ColumnBuffers() []ColumnBuffer { return buf.columns }
+func (buf *Buffer) ColumnBuffers() []ColumnBuffer {
+
+	return buf.columns
+}
 
 // Schema returns the schema of the buffer.
 //
