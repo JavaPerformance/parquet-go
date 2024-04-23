@@ -28,6 +28,7 @@ package hashprobe
 import (
 	cryptoRand "crypto/rand"
 	"encoding/binary"
+	"fmt"
 	"math"
 	"math/bits"
 	"math/rand"
@@ -102,6 +103,7 @@ func (t *Int32Table) Probe(keys, values []int32) int {
 }
 
 func (t *Int32Table) ProbeArray(keys sparse.Int32Array, values []int32) int {
+	fmt.Println("ProbeArray")
 	return t.probeArray(keys.Uint32Array(), values)
 }
 
@@ -251,6 +253,7 @@ func (t *table32) probe(keys []uint32, values []int32) int {
 }
 
 func (t *table32) probeArray(keys sparse.Uint32Array, values []int32) int {
+	fmt.Println("probeArray")
 	numKeys := keys.Len()
 
 	if totalValues := t.len + numKeys; totalValues > t.maxLen {
