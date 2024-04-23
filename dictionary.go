@@ -235,16 +235,26 @@ func (d *int32Dictionary) Type() Type { return newIndexedType(d.typ, d) }
 
 func (d *int32Dictionary) Len() int { return len(d.values) }
 
-func (d *int32Dictionary) Index(i int32) Value { return d.makeValue(d.index(i)) }
+func (d *int32Dictionary) Index(i int32) Value {
+	fmt.Println("Index")
 
-func (d *int32Dictionary) index(i int32) int32 { return d.values[i] }
+	return d.makeValue(d.index(i))
+}
+
+func (d *int32Dictionary) index(i int32) int32 {
+	fmt.Println("index")
+	return d.values[i]
+}
 
 func (d *int32Dictionary) Insert(indexes []int32, values []Value) {
+	fmt.Println("Insert1")
 	model := Value{}
 	d.insert(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64)))
 }
 
 func (d *int32Dictionary) init(indexes []int32) {
+	fmt.Println("init")
+
 	d.table = hashprobe.NewInt32Table(len(d.values), hashprobeTableMaxLoad)
 
 	n := min(len(d.values), len(indexes))
@@ -256,6 +266,7 @@ func (d *int32Dictionary) init(indexes []int32) {
 }
 
 func (d *int32Dictionary) insert(indexes []int32, rows sparse.Array) {
+	fmt.Println("Insert2")
 	// Iterating over the input in chunks helps keep relevant data in CPU
 	// caches when a large number of values are inserted into the dictionary with
 	// a single method call.
