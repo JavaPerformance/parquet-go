@@ -11,6 +11,7 @@ package unsafecast
 
 import (
 	"fmt"
+	"github.com/parquet-go/parquet-go/deprecated"
 	"reflect"
 	"unsafe"
 )
@@ -167,6 +168,7 @@ func BytesToInt8(data []byte) []int8 { return Slice[int8](data) }
 func BytesToInt16(data []byte) []int16 { return Slice[int16](data) }
 
 func BytesToInt32(data []byte) []int32 {
+	deprecated.PrintBitsWithSpaces(data)
 	fmt.Println("BytesToInt32")
 	return Slice[int32](data)
 }
