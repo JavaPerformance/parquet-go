@@ -521,7 +521,8 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	for i := range values {
 		batch[i] = parquet.ValueOf(values[i]).Level(repetitionLevel, definitionLevel, 0)
 		fmt.Printf("3.5 Batch[%d] = %v\n", i, batch[i])
-		deprecated.PrintBitsWithSpaces(batch[i].Bytes())
+		bbb := batch[i].Bytes()
+		deprecated.PrintBitsWithSpaces(bbb)
 	}
 
 	fmt.Println("4")
