@@ -247,7 +247,7 @@ func (d *int32Dictionary) index(i int32) int32 {
 }
 
 func (d *int32Dictionary) Insert(indexes []int32, values []Value) {
-	fmt.Println("Insert1")
+	fmt.Println(">Insert1")
 
 	for i := range indexes {
 		fmt.Printf("index[%d] %d\n", i, indexes[i])
@@ -258,7 +258,9 @@ func (d *int32Dictionary) Insert(indexes []int32, values []Value) {
 	}
 
 	model := Value{}
-	d.insert(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64)))
+	d.insert(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64))) // TODO, maybe here
+
+	fmt.Println("<Insert1")
 
 }
 
@@ -315,6 +317,8 @@ func (d *int32Dictionary) insert(indexes []int32, rows sparse.Array) {
 			}
 		}
 	}
+	fmt.Println("<Insert2")
+
 }
 
 func (d *int32Dictionary) Lookup(indexes []int32, values []Value) {
