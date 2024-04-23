@@ -248,8 +248,18 @@ func (d *int32Dictionary) index(i int32) int32 {
 
 func (d *int32Dictionary) Insert(indexes []int32, values []Value) {
 	fmt.Println("Insert1")
+
+	for i := range indexes {
+		fmt.Printf("index[%d] %d\n", i, indexes[i])
+	}
+
+	for j := range values {
+		fmt.Printf("value[%d] %v\n", j, values[j])
+	}
+
 	model := Value{}
 	d.insert(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64)))
+
 }
 
 func (d *int32Dictionary) init(indexes []int32) {
