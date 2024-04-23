@@ -291,19 +291,25 @@ func (d *int32Dictionary) insert(indexes []int32, rows sparse.Array) {
 	// chunking, and did not observe any penalties from having it on smaller
 	// inserts.
 	const chunkSize = insertsTargetCacheFootprint / 4
+	fmt.Println("Insert2.1")
 
 	if d.table == nil {
 		d.init(indexes)
 	}
+	fmt.Println("Insert2.2")
 
 	values := rows.Int32Array()
+	fmt.Println("Insert2.3")
 
 	for i := 0; i < values.Len(); i += chunkSize {
 		j := min(i+chunkSize, values.Len())
+		fmt.Println("Insert2.4")
 
 		if d.table.ProbeArray(values.Slice(i, j), indexes[i:j:j]) > 0 {
+			fmt.Println("Insert2.5")
 			for k, index := range indexes[i:j] {
 				if index == int32(len(d.values)) {
+					fmt.Println("Insert2.6")
 					d.values = append(d.values, values.Index(i+k))
 				}
 			}
