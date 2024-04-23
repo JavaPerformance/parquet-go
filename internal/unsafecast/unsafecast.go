@@ -69,13 +69,16 @@ type slice struct {
 // layouts of the types are compatible, it is possible to cause memory
 // corruption if the layouts mismatch (e.g. the pointers in the From are different
 // than the pointers in To).
+
 func Slice[To, From any](data []From) []To {
 	//	fmt.Println("unsafecast.go Slice")
 	// This function could use unsafe.Slice but it would drop the capacity
 	// information, so instead we implement the type conversion.
 	var zf From
 	var zt To
-	fmt.Printf("Slice: sixeof(from):%d sizeof(to):%d \n", unsafe.Sizeof(zf), unsafe.Sizeof(zt))
+	fmt.Printf("Slice: sizeof(from):%d sizeof(to):%d \n", unsafe.Sizeof(zf), unsafe.Sizeof(zt))
+	fmt.Printf("Slice: Type of From: %s\n", reflect.TypeOf(zf))
+	fmt.Printf("Slice: Type of To: %s\n", reflect.TypeOf(zt))
 	var s = (*slice)(unsafe.Pointer(&data))
 	s.len = int((uintptr(s.len) * unsafe.Sizeof(zf)) / unsafe.Sizeof(zt))
 	s.cap = int((uintptr(s.cap) * unsafe.Sizeof(zf)) / unsafe.Sizeof(zt))
