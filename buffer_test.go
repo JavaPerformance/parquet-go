@@ -527,6 +527,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 
 	for i := range batch {
 		_, err := buffer.WriteRows([]parquet.Row{batch[i : i+1]})
+
 		fmt.Println("4.5")
 		if err != nil {
 			t.Log("FAIL")
@@ -536,6 +537,7 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	fmt.Println("5")
 
 	numRows := buffer.NumRows()
+
 	fmt.Printf("5.5 %d\n", numRows)
 
 	if numRows != int64(len(batch)) {
@@ -566,9 +568,9 @@ func testBuffer(t *testing.T, node parquet.Node, buffer *parquet.Buffer, encodin
 	fmt.Print("maxValue ")
 	deprecated.PrintBitsWithSpaces(maxValue.Bytes())
 
-	//sortFunc(typ, batch)
+	sortFunc(typ, batch)
 
-	//sort.Sort(buffer)
+	sort.Sort(buffer)
 
 	fmt.Println("8")
 

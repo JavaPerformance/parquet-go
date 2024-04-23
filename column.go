@@ -176,7 +176,10 @@ func (c *Column) MaxDefinitionLevel() int { return int(c.maxDefinitionLevel) }
 
 // Index returns the position of the column in a row. Only leaf columns have a
 // column index, the method returns -1 when called on non-leaf columns.
-func (c *Column) Index() int { return int(c.index) }
+func (c *Column) Index() int {
+
+	return int(c.index)
+}
 
 // GoType returns the Go type that best represents the parquet column.
 func (c *Column) GoType() reflect.Type { return goTypeOf(c) }
