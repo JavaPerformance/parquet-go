@@ -221,6 +221,7 @@ type int32Dictionary struct {
 }
 
 func newInt32Dictionary(typ Type, columnIndex int16, numValues int32, data encoding.Values) *int32Dictionary {
+	fmt.Println("newInt32Dictionary")
 	return &int32Dictionary{
 		int32Page: int32Page{
 			typ:         typ,

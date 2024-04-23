@@ -160,7 +160,10 @@ func BytesToInt8(data []byte) []int8 { return Slice[int8](data) }
 
 func BytesToInt16(data []byte) []int16 { return Slice[int16](data) }
 
-func BytesToInt32(data []byte) []int32 { return Slice[int32](data) }
+func BytesToInt32(data []byte) []int32 {
+	fmt.Println("BytesToInt32")
+	return Slice[int32](data)
+}
 
 func BytesToInt64(data []byte) []int64 { return Slice[int64](data) }
 

@@ -369,6 +369,7 @@ func (t int32Type) NewColumnBuffer(columnIndex, numValues int) ColumnBuffer {
 }
 
 func (t int32Type) NewDictionary(columnIndex, numValues int, data encoding.Values) Dictionary {
+	fmt.Println("NewDictionary int32Type")
 	return newInt32Dictionary(t, makeColumnIndex(columnIndex), makeNumValues(numValues), data)
 }
 
