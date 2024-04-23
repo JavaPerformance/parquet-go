@@ -11,6 +11,7 @@ package unsafecast
 
 import (
 	"fmt"
+	"github.com/parquet-go/parquet-go/deprecated"
 	"reflect"
 	"unsafe"
 )
@@ -82,6 +83,9 @@ func Slice[To, From any](data []From) []To {
 	var s = (*slice)(unsafe.Pointer(&data))
 	s.len = int((uintptr(s.len) * unsafe.Sizeof(zf)) / unsafe.Sizeof(zt))
 	s.cap = int((uintptr(s.cap) * unsafe.Sizeof(zf)) / unsafe.Sizeof(zt))
+
+	deprecated.PrintBitsWithSpaces(*(*[]byte)(unsafe.Pointer(s)))
+
 	return *(*[]To)(unsafe.Pointer(s))
 }
 
