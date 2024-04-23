@@ -278,7 +278,7 @@ func (d *int32Dictionary) init(indexes []int32) {
 }
 
 func (d *int32Dictionary) insert(indexes []int32, rows sparse.Array) {
-	fmt.Println("Insert2")
+	fmt.Println(">Insert2")
 	// Iterating over the input in chunks helps keep relevant data in CPU
 	// caches when a large number of values are inserted into the dictionary with
 	// a single method call.

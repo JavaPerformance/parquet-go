@@ -103,8 +103,11 @@ func (t *Int32Table) Probe(keys, values []int32) int {
 }
 
 func (t *Int32Table) ProbeArray(keys sparse.Int32Array, values []int32) int {
-	fmt.Println("ProbeArray")
-	return t.probeArray(keys.Uint32Array(), values)
+	fmt.Println(">ProbeArray")
+	xxx := t.probeArray(keys.Uint32Array(), values)
+	fmt.Println("<ProbeArray")
+	return xxx
+	//return t.probeArray(keys.Uint32Array(), values)
 }
 
 type Float32Table struct{ table32 }
@@ -253,7 +256,7 @@ func (t *table32) probe(keys []uint32, values []int32) int {
 }
 
 func (t *table32) probeArray(keys sparse.Uint32Array, values []int32) int {
-	fmt.Println("probeArray")
+	fmt.Println(">probeArray")
 	numKeys := keys.Len()
 
 	if totalValues := t.len + numKeys; totalValues > t.maxLen {
@@ -288,6 +291,7 @@ func (t *table32) probeArray(keys sparse.Uint32Array, values []int32) int {
 		t.len = multiProbe32(t.table, t.len, h, k, v)
 		i = j
 	}
+	fmt.Println("<probeArray")
 
 	return t.len - baseLength
 }
