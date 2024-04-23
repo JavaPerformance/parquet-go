@@ -44,3 +44,10 @@ func PrintBitsWithSpaces(data []byte) {
 	}
 	fmt.Println() // Add a newline at the end
 }
+
+func PrintBitsWithSpacesWithLen(data []byte, len int) {
+	for i := 0; i < len; i++ {
+		fmt.Printf("%08b ", data[i]) // %08b formats as a zero-padded 8-bit binary number
+	}
+	fmt.Println() // Add a newline at the end
+}
