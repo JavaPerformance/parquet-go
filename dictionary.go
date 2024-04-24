@@ -258,7 +258,13 @@ func (d *int32Dictionary) Insert(indexes []int32, values []Value) {
 	}
 
 	model := Value{}
-	d.insert(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64))) // TODO, maybe here
+
+	ptr := unsafe.Offsetof(model.u64)
+
+	wibble := makeArrayValue(values, ptr+4)
+
+	d.insert(indexes, wibble) // TODO, maybe here
+	//d.insert(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64))) // TODO, maybe here
 
 	fmt.Println("<Insert1")
 
