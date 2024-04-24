@@ -259,9 +259,15 @@ func (d *int32Dictionary) Insert(indexes []int32, values []Value) {
 
 	model := Value{}
 
-	ptr := unsafe.Offsetof(model.u64)
+	offset := unsafe.Offsetof(model.u64)
 
-	wibble := makeArrayValue(values, ptr+4)
+	wibble := makeArrayValue(values, offset)
+
+	toInt32Array := wibble.Int32Array()
+
+	for p := 0; p < toInt32Array.Len(); p++ {
+		fmt.Printf("array value[%d] %d\n", p, toInt32Array.Index(p))
+	}
 
 	d.insert(indexes, wibble) // TODO, maybe here
 	//d.insert(indexes, makeArrayValue(values, unsafe.Offsetof(model.u64))) // TODO, maybe here
